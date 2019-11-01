@@ -1,5 +1,5 @@
 import os
-os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
+# os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
 import keras
 import numpy as np
 
@@ -45,7 +45,7 @@ class TransferLearning:
         self.testX = np.array(self.testX)
         self.testY = np.array(self.testY)
 
-    def trainVGG(self):
+    def trainVGG(self, ep=10, batch=15):
         vgg = VGG19(weights='imagenet', include_top=False,
                     input_shape=(224, 224, 3))
 
@@ -69,7 +69,7 @@ class TransferLearning:
         model.compile(optimizer=optimizers.RMSprop(
             lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
-        model.fit(self.trainX, self.trainY, epochs=30, batch_size=15,
+        model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch,
                   validation_data=(self.testX, self.testY))
 
         model.save_weights('Model/TransferLearning.h5')
