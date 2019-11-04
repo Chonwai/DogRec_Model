@@ -6,20 +6,17 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 amount = int(sys.argv[1])
-epochs = int(sys.argv[2])
-batch = int(sys.argv[3])
+path = sys.argv[2]
 
-def train():
-    print(sys.argv)
+def test():
+    print("Testing Case")
     utils = Utils(N=amount)
-    x, y = utils.loadDataset()
-    transferLearning = TransferLearning(classN=amount)
-    transferLearning.init(x, y)
-    transferLearning.trainTFModel(epochs, batch)
+    img = utils.loadTestImg(path)
+    testing = TransferLearning(classN=amount)
+    testing.eval(img, amount)
 
 def main():
-    train()
-
+    test()
 
 if __name__ == '__main__':
     main()
