@@ -15,7 +15,7 @@ def main():
     x, y = utils.loadDataset()
     transferLearning = TransferLearning(x, y, classN=amount)
     transferLearning.init()
-    transferLearning.trainVGG(epochs, batch)
+    transferLearning.trainTFModel(epochs, batch)
 
 if __name__ == '__main__':
     main()

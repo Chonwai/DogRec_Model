@@ -1,13 +1,15 @@
 import os
-# os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
+os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
 import keras
 import numpy as np
 
 from sklearn.model_selection import train_test_split
 from keras.applications.vgg19 import VGG19
 from keras.applications.vgg16 import VGG16
+from keras.applications.xception import Xception
+from keras.applications.inception_v3 import InceptionV3
 from keras.models import Sequential, Model
-from keras.layers import Activation, Dropout, Flatten, Dense
+from keras.layers import Activation, Dropout, Flatten, Dense, GlobalAveragePooling2D
 from keras import optimizers
 from keras import metrics
 
@@ -24,7 +26,7 @@ class TransferLearning:
 
     def init(self):
         trainX, testX, trainY, testY = train_test_split(
-            self.x, self.y, test_size=0.25, random_state=0)
+            self.x, self.y, test_size=0.3, random_state=0)
         self.convertNpArray(trainX, testX, trainY, testY)
 
     def convertNpArray(self, trainX, testX, trainY, testY):
@@ -45,23 +47,24 @@ class TransferLearning:
         self.testX = np.array(self.testX)
         self.testY = np.array(self.testY)
 
-    def trainVGG(self, ep=10, batch=15):
-        vgg = VGG19(weights='imagenet', include_top=False,
-                    input_shape=(224, 224, 3))
+    def trainTFModel(self, ep=10, batch=15):
+        pretrainingModel = InceptionV3(weights='imagenet', include_top=False, input_shape=(299, 299, 3))
 
         model = Sequential()
 
-        for layer in vgg.layers:
-            model.add(layer)
+        # for layer in pretrainingModel.layers:
+        #     model.add(layer)
+
+        model.add(pretrainingModel)
 
         for layer in model.layers:
             layer.trainable = False
 
-        model.add(Flatten(input_shape=self.trainX.shape[1:]))
+        model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.5))
+        model.add(Dropout(0.3))
         model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.5))
+        model.add(Dropout(0.3))
         model.add(Dense(self.classN, activation='softmax'))
 
         model.summary()

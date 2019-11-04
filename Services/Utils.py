@@ -42,5 +42,5 @@ class Utils():
     def loadImg(self, path):
         img = skimage.io.imread(path)
         img = img / 255.0
-        resizeImg = skimage.transform.resize(img, (224, 224, 3))
+        resizeImg = skimage.transform.resize(img, (299, 299, 3))
         return resizeImg
