@@ -13,18 +13,19 @@ def train():
     print(sys.argv)
     utils = Utils(N=amount)
     x, y = utils.loadDataset()
-    transferLearning = TransferLearning(x, y, classN=amount)
-    transferLearning.init()
+    transferLearning = TransferLearning(classN=amount)
+    transferLearning.init(x, y)
     transferLearning.trainTFModel(epochs, batch)
 
 def test():
     print("Testing Case")
     utils = Utils(N=amount)
-    img = utils.loadImg('./Test/testImg01.jpg')
+    img = utils.loadTestImg('./Test/testImg05.jpg')
     testing = TransferLearning(classN=amount)
-    testing.eval(img, 5)
+    testing.eval(img, amount)
 
 def main():
+    # train()
     test()
 
 

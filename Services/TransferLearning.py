@@ -9,24 +9,22 @@ from keras.applications.vgg16 import VGG16
 from keras.applications.xception import Xception
 from keras.applications.inception_v3 import InceptionV3
 from keras.models import Sequential, Model
-from keras.layers import Activation, Dropout, Flatten, Dense, GlobalAveragePooling2D
+from keras.layers import Activation, Dropout, Flatten, Dense, GlobalAveragePooling2D, GlobalAveragePooling1D
 from keras import optimizers
 from keras import metrics
 
 
 class TransferLearning:
-    def __init__(self, x=[], y=[], classN):
-        self.x = x
-        self.y = y
+    def __init__(self, classN):
         self.trainX = []
         self.trainY = []
         self.testX = []
         self.testY = []
         self.classN = classN
 
-    def init(self):
+    def init(self, x, y):
         trainX, testX, trainY, testY = train_test_split(
-            self.x, self.y, test_size=0.3, random_state=0)
+            x, y, test_size=0.3, random_state=0)
         self.convertNpArray(trainX, testX, trainY, testY)
 
     def convertNpArray(self, trainX, testX, trainY, testY):
@@ -49,14 +47,14 @@ class TransferLearning:
 
     def trainTFModel(self, ep=10, batch=15):
 
-        pretrainingModel = InceptionV3(weights='imagenet', include_top=False, input_shape=(299, 299, 3))
+        pretrainingModel = VGG19(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
         model = Sequential()
 
-        # for layer in pretrainingModel.layers:
-        #     model.add(layer)
+        for layer in pretrainingModel.layers:
+            model.add(layer)
 
-        model.add(pretrainingModel)
+        # model.add(pretrainingModel)
 
         for layer in model.layers:
             layer.trainable = False
@@ -71,7 +69,7 @@ class TransferLearning:
         model.summary()
 
         model.compile(optimizer=optimizers.RMSprop(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
         model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch,
                   validation_data=(self.testX, self.testY))
@@ -80,13 +78,14 @@ class TransferLearning:
 
     def eval(self, img, k=5):
 
-        pretrainingModel = InceptionV3(weights='imagenet', include_top=False, input_shape=(299, 299, 3))
+        pretrainingModel = VGG19(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
         model = Sequential()
 
-        model.add(pretrainingModel)
+        for layer in pretrainingModel.layers:
+            model.add(layer)
 
-        model.add(Flatten())
+        model.add(GlobalAveragePooling2D(input_shape=img.shape[1:]))
         model.add(Dense(1024, activation='relu'))
         model.add(Dropout(0.3))
         model.add(Dense(1024, activation='relu'))
