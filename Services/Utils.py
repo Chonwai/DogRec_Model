@@ -39,8 +39,8 @@ class Utils():
         print(len(labels))
         return images, labels
 
-    def loadImg(self, path):
+    def loadImg(self, path, x=299, y=299):
         img = skimage.io.imread(path)
         img = img / 255.0
-        resizeImg = skimage.transform.resize(img, (299, 299, 3))
+        resizeImg = skimage.transform.resize(img, (x, y, 3))
         return resizeImg

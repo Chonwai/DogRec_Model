@@ -15,7 +15,7 @@ from keras import metrics
 
 
 class TransferLearning:
-    def __init__(self, x, y, classN):
+    def __init__(self, x=[], y=[], classN):
         self.x = x
         self.y = y
         self.trainX = []
@@ -48,6 +48,7 @@ class TransferLearning:
         self.testY = np.array(self.testY)
 
     def trainTFModel(self, ep=10, batch=15):
+
         pretrainingModel = InceptionV3(weights='imagenet', include_top=False, input_shape=(299, 299, 3))
 
         model = Sequential()
@@ -76,3 +77,27 @@ class TransferLearning:
                   validation_data=(self.testX, self.testY))
 
         model.save_weights('Model/TransferLearning.h5')
+
+    def eval(self, img, k=5):
+
+        pretrainingModel = InceptionV3(weights='imagenet', include_top=False, input_shape=(299, 299, 3))
+
+        model = Sequential()
+
+        model.add(pretrainingModel)
+
+        model.add(Flatten())
+        model.add(Dense(1024, activation='relu'))
+        model.add(Dropout(0.3))
+        model.add(Dense(1024, activation='relu'))
+        model.add(Dropout(0.3))
+        model.add(Dense(self.classN, activation='softmax'))
+
+        model.load_weights('Model/TransferLearning.h5')
+
+        predict = model.predict(img)
+        result = predict[0]
+        topK = sorted(range(len(result)),
+                      key=lambda i: result[i], reverse=True)[:k]
+
+        print(topK)
