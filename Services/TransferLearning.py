@@ -60,10 +60,12 @@ class TransferLearning:
             layer.trainable = False
 
         model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        model.add(Dense(512, activation='relu'))
+        # model.add(Dropout(0.3))
         model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.3))
+        # model.add(Dropout(0.3))
         model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.3))
+        # model.add(Dropout(0.3))
         model.add(Dense(self.classN, activation='softmax'))
 
         model.summary()
