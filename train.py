@@ -15,7 +15,8 @@ def train():
     x, y = utils.loadDataset()
     transferLearning = TransferLearning(classN=amount)
     transferLearning.init(x, y)
-    transferLearning.trainTFModel(epochs, batch)
+    # transferLearning.trainTFModel(epochs, batch)
+    transferLearning.trainMobileNetV2(epochs, batch)
 
 def main():
     train()

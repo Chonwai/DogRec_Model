@@ -8,6 +8,8 @@ from keras.applications.vgg19 import VGG19
 from keras.applications.vgg16 import VGG16
 from keras.applications.xception import Xception
 from keras.applications.inception_v3 import InceptionV3
+from keras.applications.inception_resnet_v2 import InceptionResNetV2
+from keras.applications.mobilenetv2 import MobileNetV2
 from keras.models import Sequential, Model
 from keras.layers import Activation, Dropout, Flatten, Dense, GlobalAveragePooling2D, GlobalAveragePooling1D
 from keras import optimizers
@@ -60,12 +62,12 @@ class TransferLearning:
             layer.trainable = False
 
         model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        model.add(Dense(1024, activation='relu'))
+        model.add(Dropout(0.5))
         model.add(Dense(512, activation='relu'))
-        # model.add(Dropout(0.3))
+        model.add(Dropout(0.5))
         model.add(Dense(1024, activation='relu'))
-        # model.add(Dropout(0.3))
-        model.add(Dense(1024, activation='relu'))
-        # model.add(Dropout(0.3))
+        model.add(Dropout(0.5))
         model.add(Dense(self.classN, activation='softmax'))
 
         model.summary()
@@ -77,6 +79,23 @@ class TransferLearning:
                   validation_data=(self.testX, self.testY))
 
         model.save_weights('Model/TransferLearning.h5')
+
+    def trainMobileNetV2(self, ep=10, batch=15):
+
+        # pretrainingModel = MobileNetV2(weights='imagenet', include_top=True, input_shape=(224, 224, 3))
+
+        # model = Sequential()
+
+        model = MobileNetV2(include_top=True, weights=None, input_shape=(224, 224, 3), classes=self.classN)
+
+        model.summary()
+
+        model.compile(optimizer=optimizers.RMSprop(
+            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+
+        model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(self.testX, self.testY))
+
+        model.save_weights('Model/20191121_MobileNetV2.h5')
 
     def eval(self, img, k=5):
 
