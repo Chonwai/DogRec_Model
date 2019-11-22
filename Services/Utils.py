@@ -29,7 +29,7 @@ class Utils():
         for i in self.folderList[:self.N]:
             imgList = os.listdir(self.datasetPath + '/' + i)
             for j in imgList:
-                if (count % 2 == 0):
+                if (count % 1 == 0):
                     continue
                 path = self.datasetPath + '/' + i + '/' + j
                 images.append(self.loadImg(path))

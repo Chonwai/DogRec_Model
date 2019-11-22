@@ -81,12 +81,19 @@ class TransferLearning:
         model.save_weights('Model/TransferLearning.h5')
 
     def trainMobileNetV2(self, ep=10, batch=15):
-
-        # pretrainingModel = MobileNetV2(weights='imagenet', include_top=True, input_shape=(224, 224, 3))
-
-        # model = Sequential()
-
         model = MobileNetV2(include_top=True, weights=None, input_shape=(224, 224, 3), classes=self.classN)
+
+        model.summary()
+
+        model.compile(optimizer=optimizers.RMSprop(
+            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+
+        model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(self.testX, self.testY))
+
+        model.save_weights('Model/20191121_MobileNetV2.h5')
+
+    def trainInceptionResNetV2(self, ep=10, batch=15):
+        model = InceptionResNetV2(include_top=True, weights=None, input_shape=(299, 299, 3), classes=self.classN)
 
         model.summary()
 
