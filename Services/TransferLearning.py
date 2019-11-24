@@ -85,6 +85,18 @@ class TransferLearning:
 
         model.summary()
 
+        model.compile(optimizer=optimizers.Adam(
+            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+
+        model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(self.testX, self.testY))
+
+        model.save_weights('Model/MobileNetV2.h5')
+
+    def trainXception(self, ep=10, batch=15, pooling='avg'):
+        model = Xception(include_top=True, weights=None, input_shape=(299, 299, 3), classes=self.classN)
+
+        model.summary()
+
         model.compile(optimizer=optimizers.RMSprop(
             lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
@@ -92,8 +104,8 @@ class TransferLearning:
 
         model.save_weights('Model/20191121_MobileNetV2.h5')
 
-    def trainInceptionResNetV2(self, ep=10, batch=15):
-        model = InceptionResNetV2(include_top=True, weights=None, input_shape=(299, 299, 3), classes=self.classN)
+    def trainVGG19(self, ep=10, batch=15, pooling='avg'):
+        model = VGG19(include_top=True, weights=None, input_shape=(112, 112, 3), classes=self.classN)
 
         model.summary()
 

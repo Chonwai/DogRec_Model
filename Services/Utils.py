@@ -29,8 +29,10 @@ class Utils():
         for i in self.folderList[:self.N]:
             imgList = os.listdir(self.datasetPath + '/' + i)
             for j in imgList:
+                # if (count % 2 == 0):
+                #     continue
                 path = self.datasetPath + '/' + i + '/' + j
-                images.append(self.loadImg(path))
+                images.append(self.loadImg(path, 112, 112))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
             print("Finish to loading %d category: %s" % (count, i))
@@ -41,7 +43,7 @@ class Utils():
     def loadImg(self, path, x=224, y=224):
         img = skimage.io.imread(path)
         img = img / 255.0
-        resizeImg = skimage.transform.resize(img, (224, 224, 3))
+        resizeImg = skimage.transform.resize(img, (x, y, 3))
         return resizeImg
 
     def loadTestImg(self, path, x=224, y=224):
