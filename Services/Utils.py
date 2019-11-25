@@ -29,10 +29,10 @@ class Utils():
         for i in self.folderList[:self.N]:
             imgList = os.listdir(self.datasetPath + '/' + i)
             for j in imgList:
-                # if (count % 2 == 0):
-                #     continue
+                if (count % 2 == 0):
+                    continue
                 path = self.datasetPath + '/' + i + '/' + j
-                images.append(self.loadImg(path, 112, 112))
+                images.append(self.loadImg(path, 56, 56))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
             print("Finish to loading %d category: %s" % (count, i))
