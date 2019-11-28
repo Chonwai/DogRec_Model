@@ -50,7 +50,7 @@ class TransferLearning:
 
     def trainTFModel(self, ep=10, batch=15):
 
-        pretrainingModel = VGG19(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+        pretrainingModel = VGG19(weights='imagenet', include_top=False, input_shape=(168, 168, 3))
 
         model = Sequential()
 
