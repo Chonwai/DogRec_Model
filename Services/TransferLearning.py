@@ -2,6 +2,7 @@ import os
 os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
 import keras
 import numpy as np
+import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from keras.applications.vgg19 import VGG19
@@ -63,25 +64,35 @@ class TransferLearning:
 
         model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(512, activation='relu'))
-        model.add(Dropout(0.5))
+        model.add(Dropout(0.3))
         model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.5))
+        model.add(Dropout(0.3))
         model.add(Dense(self.classN, activation='softmax'))
 
         model.summary()
 
         model.compile(optimizer=optimizers.RMSprop(
-            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+            lr=0.01), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
-        model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch,
-                  validation_data=(self.testX, self.testY))
+        model.fit(self.trainX, self.trainY, epochs=ep, validation_data=(self.testX, self.testY))
 
-        model.save_weights('Model/TransferLearning.h5')
+        model.save_weights('Model/TF_VGG19_02.h5')
 
     def trainMobileNetV2(self, ep=10, batch=15):
-        model = MobileNetV2(include_top=True, weights=None, input_shape=(224, 224, 3), classes=self.classN)
+
+        baseModel = MobileNetV2(include_top=False, weights=None, input_shape=(128, 128, 3))
+
+        model = Sequential()
+
+        # for layer in baseModel.layers:
+        #     model.add(layer)
+        model.add(baseModel)
+        model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        model.add(Dense(1024, activation='relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(1024, activation='relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(self.classN, activation='softmax'))
 
         model.summary()
 
@@ -90,10 +101,10 @@ class TransferLearning:
 
         model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(self.testX, self.testY))
 
-        model.save_weights('Model/MobileNetV2.h5')
+        model.save_weights('Model/MobileNetV2_01.h5')
 
     def trainXception(self, ep=10, batch=15, pooling='avg'):
-        model = Xception(include_top=True, weights=None, input_shape=(299, 299, 3), classes=self.classN)
+        model = Xception(include_top=True, weights=None, input_shape=(75, 75, 3), classes=self.classN)
 
         model.summary()
 
@@ -105,7 +116,7 @@ class TransferLearning:
         model.save_weights('Model/20191121_MobileNetV2.h5')
 
     def trainVGG19(self, ep=10, batch=15, pooling='avg'):
-        model = VGG19(include_top=True, weights=None, input_shape=(112, 112, 3), classes=self.classN)
+        model = VGG19(include_top=True, weights=None, input_shape=(75, 75, 3), classes=self.classN)
 
         model.summary()
 
