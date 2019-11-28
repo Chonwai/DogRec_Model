@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02105641</folder>
+	<filename>n02105641_3602</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>220</width>
+		<height>220</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Old_English_sheepdog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>22</xmin>
+			<ymin>33</ymin>
+			<xmax>211</xmax>
+			<ymax>200</ymax>
+		</bndbox>
+	</object>
+</annotation>

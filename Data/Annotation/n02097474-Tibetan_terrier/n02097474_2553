@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02097474</folder>
+	<filename>n02097474_2553</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>480</width>
+		<height>321</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Tibetan_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>0</xmin>
+			<ymin>0</ymin>
+			<xmax>475</xmax>
+			<ymax>320</ymax>
+		</bndbox>
+	</object>
+</annotation>

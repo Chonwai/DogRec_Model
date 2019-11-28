@@ -1,0 +1,37 @@
+<annotation>
+	<folder>02107574</folder>
+	<filename>n02107574_835</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>375</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Greater_Swiss_Mountain_dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>63</xmin>
+			<ymin>212</ymin>
+			<xmax>180</xmax>
+			<ymax>498</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Greater_Swiss_Mountain_dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>178</xmin>
+			<ymin>255</ymin>
+			<xmax>300</xmax>
+			<ymax>410</ymax>
+		</bndbox>
+	</object>
+</annotation>

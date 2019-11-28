@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02111277</folder>
+	<filename>n02111277_12042</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>360</width>
+		<height>239</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Newfoundland</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>180</xmin>
+			<ymin>85</ymin>
+			<xmax>314</xmax>
+			<ymax>237</ymax>
+		</bndbox>
+	</object>
+</annotation>

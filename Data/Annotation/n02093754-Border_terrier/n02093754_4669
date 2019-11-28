@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02093754</folder>
+	<filename>n02093754_4669</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>167</width>
+		<height>180</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Border_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>29</xmin>
+			<ymin>8</ymin>
+			<xmax>166</xmax>
+			<ymax>178</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02108551</folder>
+	<filename>n02108551_4426</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>340</width>
+		<height>255</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Tibetan_mastiff</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>48</xmin>
+			<ymin>45</ymin>
+			<xmax>303</xmax>
+			<ymax>254</ymax>
+		</bndbox>
+	</object>
+</annotation>

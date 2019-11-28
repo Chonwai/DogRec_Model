@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02089867</folder>
+	<filename>n02089867_2614</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>719</width>
+		<height>750</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Walker_hound</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>107</xmin>
+			<ymin>82</ymin>
+			<xmax>692</xmax>
+			<ymax>710</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02105412</folder>
+	<filename>n02105412_1398</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>376</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>kelpie</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>3</xmin>
+			<ymin>0</ymin>
+			<xmax>389</xmax>
+			<ymax>375</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02105251</folder>
+	<filename>n02105251_2317</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>200</width>
+		<height>190</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>briard</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>19</xmin>
+			<ymin>11</ymin>
+			<xmax>191</xmax>
+			<ymax>189</ymax>
+		</bndbox>
+	</object>
+</annotation>

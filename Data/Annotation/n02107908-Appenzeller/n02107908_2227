@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02107908</folder>
+	<filename>n02107908_2227</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>217</width>
+		<height>162</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Appenzeller</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>3</xmin>
+			<ymin>25</ymin>
+			<xmax>216</xmax>
+			<ymax>151</ymax>
+		</bndbox>
+	</object>
+</annotation>

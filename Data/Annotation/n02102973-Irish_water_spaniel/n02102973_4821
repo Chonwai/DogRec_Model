@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02102973</folder>
+	<filename>n02102973_4821</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>129</width>
+		<height>164</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Irish_water_spaniel</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>6</xmin>
+			<ymin>4</ymin>
+			<xmax>128</xmax>
+			<ymax>163</ymax>
+		</bndbox>
+	</object>
+</annotation>

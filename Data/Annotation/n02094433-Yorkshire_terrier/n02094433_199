@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02094433</folder>
+	<filename>n02094433_199</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>350</width>
+		<height>596</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Yorkshire_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>61</xmin>
+			<ymin>25</ymin>
+			<xmax>308</xmax>
+			<ymax>575</ymax>
+		</bndbox>
+	</object>
+</annotation>

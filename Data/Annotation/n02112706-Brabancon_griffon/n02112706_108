@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02112706</folder>
+	<filename>n02112706_108</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>267</width>
+		<height>356</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Brabancon_griffon</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>59</xmin>
+			<ymin>58</ymin>
+			<xmax>192</xmax>
+			<ymax>316</ymax>
+		</bndbox>
+	</object>
+</annotation>

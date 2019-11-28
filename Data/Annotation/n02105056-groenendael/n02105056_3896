@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02105056</folder>
+	<filename>n02105056_3896</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>458</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>groenendael</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>26</xmin>
+			<ymin>33</ymin>
+			<xmax>441</xmax>
+			<ymax>498</ymax>
+		</bndbox>
+	</object>
+</annotation>

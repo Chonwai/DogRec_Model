@@ -1,0 +1,37 @@
+<annotation>
+	<folder>02090721</folder>
+	<filename>n02090721_708</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>357</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Irish_wolfhound</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>0</xmin>
+			<ymin>143</ymin>
+			<xmax>410</xmax>
+			<ymax>356</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Irish_wolfhound</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>231</xmin>
+			<ymin>18</ymin>
+			<xmax>435</xmax>
+			<ymax>124</ymax>
+		</bndbox>
+	</object>
+</annotation>

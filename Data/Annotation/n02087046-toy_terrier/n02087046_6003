@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02087046</folder>
+	<filename>n02087046_6003</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>548</width>
+		<height>618</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>toy_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>35</xmin>
+			<ymin>15</ymin>
+			<xmax>546</xmax>
+			<ymax>604</ymax>
+		</bndbox>
+	</object>
+</annotation>

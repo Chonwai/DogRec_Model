@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02094114</folder>
+	<filename>n02094114_3477</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>191</width>
+		<height>200</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Norfolk_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>22</xmin>
+			<ymin>43</ymin>
+			<xmax>151</xmax>
+			<ymax>168</ymax>
+		</bndbox>
+	</object>
+</annotation>

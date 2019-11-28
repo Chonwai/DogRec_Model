@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02109961</folder>
+	<filename>n02109961_11224</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>1024</width>
+		<height>768</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Eskimo_dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>219</xmin>
+			<ymin>109</ymin>
+			<xmax>770</xmax>
+			<ymax>597</ymax>
+		</bndbox>
+	</object>
+</annotation>

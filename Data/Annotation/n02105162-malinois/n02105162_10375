@@ -1,0 +1,37 @@
+<annotation>
+	<folder>02105162</folder>
+	<filename>n02105162_10375</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>340</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>malinois</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>154</xmin>
+			<ymin>62</ymin>
+			<xmax>401</xmax>
+			<ymax>295</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>malinois</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>362</xmin>
+			<ymin>116</ymin>
+			<xmax>477</xmax>
+			<ymax>200</ymax>
+		</bndbox>
+	</object>
+</annotation>

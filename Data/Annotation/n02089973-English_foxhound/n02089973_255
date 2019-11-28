@@ -1,0 +1,25 @@
+<annotation>
+	<folder>%s</folder>
+	<filename>%s</filename>
+	<source>
+		<database>ILSVRC_2011</database>
+	</source>
+	<size>
+		<width>250</width>
+		<height>251</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>English_foxhound</name>
+		<pose>NULL</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>47</xmin>
+			<ymin>41</ymin>
+			<xmax>249</xmax>
+			<ymax>223</ymax>
+		</bndbox>
+	</object>
+</annotation>

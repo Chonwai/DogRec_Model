@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02102480</folder>
+	<filename>n02102480_7189</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>1495</width>
+		<height>1186</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Sussex_spaniel</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>106</xmin>
+			<ymin>400</ymin>
+			<xmax>1411</xmax>
+			<ymax>969</ymax>
+		</bndbox>
+	</object>
+</annotation>

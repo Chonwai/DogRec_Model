@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02099712</folder>
+	<filename>n02099712_5853</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>382</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Labrador_retriever</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>91</xmin>
+			<ymin>60</ymin>
+			<xmax>355</xmax>
+			<ymax>428</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02093428</folder>
+	<filename>n02093428_1351</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>333</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>American_Staffordshire_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>58</xmin>
+			<ymin>40</ymin>
+			<xmax>474</xmax>
+			<ymax>313</ymax>
+		</bndbox>
+	</object>
+</annotation>

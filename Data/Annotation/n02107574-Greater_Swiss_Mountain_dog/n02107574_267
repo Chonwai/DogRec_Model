@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02107574</folder>
+	<filename>n02107574_267</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>200</width>
+		<height>181</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Greater_Swiss_Mountain_dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>7</xmin>
+			<ymin>10</ymin>
+			<xmax>190</xmax>
+			<ymax>180</ymax>
+		</bndbox>
+	</object>
+</annotation>

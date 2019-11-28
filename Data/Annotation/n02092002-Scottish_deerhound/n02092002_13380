@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02092002</folder>
+	<filename>n02092002_13380</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>333</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Scottish_deerhound</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>60</xmin>
+			<ymin>39</ymin>
+			<xmax>335</xmax>
+			<ymax>331</ymax>
+		</bndbox>
+	</object>
+</annotation>

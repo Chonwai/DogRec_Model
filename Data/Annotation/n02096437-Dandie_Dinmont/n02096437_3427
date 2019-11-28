@@ -1,0 +1,37 @@
+<annotation>
+	<folder>02096437</folder>
+	<filename>n02096437_3427</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>381</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Dandie_Dinmont</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>154</xmin>
+			<ymin>200</ymin>
+			<xmax>379</xmax>
+			<ymax>485</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Dandie_Dinmont</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>15</xmin>
+			<ymin>20</ymin>
+			<xmax>144</xmax>
+			<ymax>190</ymax>
+		</bndbox>
+	</object>
+</annotation>

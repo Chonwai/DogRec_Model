@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02108089</folder>
+	<filename>n02108089_2953</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>302</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>boxer</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>109</xmin>
+			<ymin>23</ymin>
+			<xmax>497</xmax>
+			<ymax>301</ymax>
+		</bndbox>
+	</object>
+</annotation>

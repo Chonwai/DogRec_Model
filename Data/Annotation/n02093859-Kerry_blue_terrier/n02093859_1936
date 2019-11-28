@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02093859</folder>
+	<filename>n02093859_1936</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>358</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Kerry_blue_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>60</xmin>
+			<ymin>199</ymin>
+			<xmax>143</xmax>
+			<ymax>252</ymax>
+		</bndbox>
+	</object>
+</annotation>

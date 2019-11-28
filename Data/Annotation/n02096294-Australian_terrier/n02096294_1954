@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02096294</folder>
+	<filename>n02096294_1954</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>375</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Australian_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>51</xmin>
+			<ymin>93</ymin>
+			<xmax>342</xmax>
+			<ymax>385</ymax>
+		</bndbox>
+	</object>
+</annotation>

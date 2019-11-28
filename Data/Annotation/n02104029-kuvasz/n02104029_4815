@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02104029</folder>
+	<filename>n02104029_4815</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>808</width>
+		<height>537</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>kuvasz</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>454</xmin>
+			<ymin>29</ymin>
+			<xmax>806</xmax>
+			<ymax>535</ymax>
+		</bndbox>
+	</object>
+</annotation>

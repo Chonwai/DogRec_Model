@@ -1,0 +1,37 @@
+<annotation>
+	<folder>02097130</folder>
+	<filename>n02097130_4991</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>375</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>giant_schnauzer</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>19</xmin>
+			<ymin>82</ymin>
+			<xmax>291</xmax>
+			<ymax>311</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>giant_schnauzer</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>300</xmin>
+			<ymin>142</ymin>
+			<xmax>462</xmax>
+			<ymax>285</ymax>
+		</bndbox>
+	</object>
+</annotation>

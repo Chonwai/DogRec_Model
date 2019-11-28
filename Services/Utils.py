@@ -1,7 +1,7 @@
 import os
 import skimage.io
 import skimage.transform
-
+import xml.etree.ElementTree as ET
 
 class Utils():
     def __init__(self, N, datasetPath='./Data/Training'):
@@ -31,8 +31,8 @@ class Utils():
             for j in imgList:
                 if (count % 2 == 0):
                     continue
-                path = self.datasetPath + '/' + i + '/' + j
-                images.append(self.loadImg(path, 224, 224))
+                imgPath = self.datasetPath + '/' + i + '/' + j
+                images.append(self.loadImg(imgPath, 224, 224))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
             print("Finish to loading %d category: %s" % (count, i))

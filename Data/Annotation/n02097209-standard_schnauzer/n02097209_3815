@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02097209</folder>
+	<filename>n02097209_3815</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>364</width>
+		<height>306</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>standard_schnauzer</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>22</xmin>
+			<ymin>44</ymin>
+			<xmax>116</xmax>
+			<ymax>265</ymax>
+		</bndbox>
+	</object>
+</annotation>

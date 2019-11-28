@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02091032</folder>
+	<filename>n02091032_1481</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>275</width>
+		<height>196</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Italian_greyhound</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>0</xmin>
+			<ymin>29</ymin>
+			<xmax>267</xmax>
+			<ymax>177</ymax>
+		</bndbox>
+	</object>
+</annotation>

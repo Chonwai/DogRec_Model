@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02113186</folder>
+	<filename>n02113186_6300</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>375</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Cardigan</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>70</xmin>
+			<ymin>110</ymin>
+			<xmax>274</xmax>
+			<ymax>293</ymax>
+		</bndbox>
+	</object>
+</annotation>

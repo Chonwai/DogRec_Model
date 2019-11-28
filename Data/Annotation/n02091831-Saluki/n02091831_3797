@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02091831</folder>
+	<filename>n02091831_3797</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>336</width>
+		<height>343</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Saluki</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>23</xmin>
+			<ymin>61</ymin>
+			<xmax>310</xmax>
+			<ymax>301</ymax>
+		</bndbox>
+	</object>
+</annotation>

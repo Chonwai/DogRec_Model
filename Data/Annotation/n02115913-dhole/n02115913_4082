@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02115913</folder>
+	<filename>n02115913_4082</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>374</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>dhole</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>217</xmin>
+			<ymin>116</ymin>
+			<xmax>468</xmax>
+			<ymax>194</ymax>
+		</bndbox>
+	</object>
+</annotation>

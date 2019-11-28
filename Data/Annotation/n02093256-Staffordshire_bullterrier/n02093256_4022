@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02093256</folder>
+	<filename>n02093256_4022</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>375</width>
+		<height>369</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Staffordshire_bullterrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>212</xmin>
+			<ymin>184</ymin>
+			<xmax>315</xmax>
+			<ymax>368</ymax>
+		</bndbox>
+	</object>
+</annotation>

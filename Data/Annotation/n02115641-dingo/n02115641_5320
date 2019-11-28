@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02115641</folder>
+	<filename>n02115641_5320</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>250</width>
+		<height>193</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>dingo</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>21</xmin>
+			<ymin>33</ymin>
+			<xmax>225</xmax>
+			<ymax>161</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02109047</folder>
+	<filename>n02109047_19775</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>1496</width>
+		<height>2083</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Great_Dane</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>364</xmin>
+			<ymin>192</ymin>
+			<xmax>1084</xmax>
+			<ymax>2015</ymax>
+		</bndbox>
+	</object>
+</annotation>

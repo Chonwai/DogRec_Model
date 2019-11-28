@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02091244</folder>
+	<filename>n02091244_3631</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>305</width>
+		<height>277</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Ibizan_hound</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>8</xmin>
+			<ymin>9</ymin>
+			<xmax>287</xmax>
+			<ymax>273</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02088094</folder>
+	<filename>n02088094_6493</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>193</width>
+		<height>295</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Afghan_hound</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>33</xmin>
+			<ymin>77</ymin>
+			<xmax>190</xmax>
+			<ymax>291</ymax>
+		</bndbox>
+	</object>
+</annotation>

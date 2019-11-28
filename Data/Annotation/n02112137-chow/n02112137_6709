@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02112137</folder>
+	<filename>n02112137_6709</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>375</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>chow</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>146</xmin>
+			<ymin>66</ymin>
+			<xmax>392</xmax>
+			<ymax>234</ymax>
+		</bndbox>
+	</object>
+</annotation>

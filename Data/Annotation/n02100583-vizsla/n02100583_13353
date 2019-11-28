@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02100583</folder>
+	<filename>n02100583_13353</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>160</width>
+		<height>240</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>vizsla</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>17</xmin>
+			<ymin>40</ymin>
+			<xmax>129</xmax>
+			<ymax>239</ymax>
+		</bndbox>
+	</object>
+</annotation>

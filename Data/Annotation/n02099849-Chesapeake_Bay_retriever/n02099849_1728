@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02099849</folder>
+	<filename>n02099849_1728</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>840</width>
+		<height>771</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Chesapeake_Bay_retriever</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1</xmin>
+			<ymin>189</ymin>
+			<xmax>581</xmax>
+			<ymax>769</ymax>
+		</bndbox>
+	</object>
+</annotation>

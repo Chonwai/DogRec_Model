@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02090379</folder>
+	<filename>n02090379_364</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>390</width>
+		<height>293</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>redbone</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1</xmin>
+			<ymin>66</ymin>
+			<xmax>340</xmax>
+			<ymax>292</ymax>
+		</bndbox>
+	</object>
+</annotation>

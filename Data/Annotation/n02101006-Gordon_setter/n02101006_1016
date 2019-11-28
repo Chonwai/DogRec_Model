@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02101006</folder>
+	<filename>n02101006_1016</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>563</width>
+		<height>499</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Gordon_setter</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>45</xmin>
+			<ymin>11</ymin>
+			<xmax>531</xmax>
+			<ymax>497</ymax>
+		</bndbox>
+	</object>
+</annotation>

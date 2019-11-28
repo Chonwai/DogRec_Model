@@ -1,0 +1,37 @@
+<annotation>
+	<folder>02102480</folder>
+	<filename>n02102480_5158</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>610</width>
+		<height>364</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Sussex_spaniel</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>339</xmin>
+			<ymin>148</ymin>
+			<xmax>517</xmax>
+			<ymax>315</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Sussex_spaniel</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>515</xmin>
+			<ymin>0</ymin>
+			<xmax>608</xmax>
+			<ymax>208</ymax>
+		</bndbox>
+	</object>
+</annotation>

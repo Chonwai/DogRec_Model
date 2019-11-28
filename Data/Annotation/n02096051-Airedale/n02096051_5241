@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02096051</folder>
+	<filename>n02096051_5241</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>375</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Airedale</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>162</xmin>
+			<ymin>42</ymin>
+			<xmax>380</xmax>
+			<ymax>358</ymax>
+		</bndbox>
+	</object>
+</annotation>

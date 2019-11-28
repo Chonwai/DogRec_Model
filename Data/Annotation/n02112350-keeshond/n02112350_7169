@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02112350</folder>
+	<filename>n02112350_7169</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>337</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>keeshond</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>151</xmin>
+			<ymin>199</ymin>
+			<xmax>295</xmax>
+			<ymax>462</ymax>
+		</bndbox>
+	</object>
+</annotation>

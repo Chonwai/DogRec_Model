@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02109525</folder>
+	<filename>n02109525_14249</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>315</width>
+		<height>360</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Saint_Bernard</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>36</xmin>
+			<ymin>39</ymin>
+			<xmax>270</xmax>
+			<ymax>359</ymax>
+		</bndbox>
+	</object>
+</annotation>

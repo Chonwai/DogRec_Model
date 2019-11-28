@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02086646</folder>
+	<filename>n02086646_3986</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>338</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Blenheim_spaniel</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>78</xmin>
+			<ymin>32</ymin>
+			<xmax>423</xmax>
+			<ymax>307</ymax>
+		</bndbox>
+	</object>
+</annotation>

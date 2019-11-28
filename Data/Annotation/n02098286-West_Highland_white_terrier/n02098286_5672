@@ -1,0 +1,37 @@
+<annotation>
+	<folder>02098286</folder>
+	<filename>n02098286_5672</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>448</width>
+		<height>336</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>West_Highland_white_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>0</xmin>
+			<ymin>24</ymin>
+			<xmax>297</xmax>
+			<ymax>291</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>West_Highland_white_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>276</xmin>
+			<ymin>99</ymin>
+			<xmax>439</xmax>
+			<ymax>321</ymax>
+		</bndbox>
+	</object>
+</annotation>

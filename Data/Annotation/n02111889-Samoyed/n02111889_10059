@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02111889</folder>
+	<filename>n02111889_10059</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>269</width>
+		<height>279</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Samoyed</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>18</xmin>
+			<ymin>10</ymin>
+			<xmax>224</xmax>
+			<ymax>260</ymax>
+		</bndbox>
+	</object>
+</annotation>

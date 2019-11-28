@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02096437</folder>
+	<filename>n02096437_866</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>200</width>
+		<height>223</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Dandie_Dinmont</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>84</xmin>
+			<ymin>93</ymin>
+			<xmax>168</xmax>
+			<ymax>214</ymax>
+		</bndbox>
+	</object>
+</annotation>

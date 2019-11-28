@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02106030</folder>
+	<filename>n02106030_16212</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>280</width>
+		<height>373</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>collie</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1</xmin>
+			<ymin>48</ymin>
+			<xmax>208</xmax>
+			<ymax>372</ymax>
+		</bndbox>
+	</object>
+</annotation>

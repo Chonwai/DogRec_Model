@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02113712</folder>
+	<filename>n02113712_459</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>279</width>
+		<height>300</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>miniature_poodle</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>44</xmin>
+			<ymin>11</ymin>
+			<xmax>230</xmax>
+			<ymax>292</ymax>
+		</bndbox>
+	</object>
+</annotation>

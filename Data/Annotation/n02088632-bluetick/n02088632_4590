@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02088632</folder>
+	<filename>n02088632_4590</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>272</width>
+		<height>221</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>bluetick</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>41</xmin>
+			<ymin>29</ymin>
+			<xmax>263</xmax>
+			<ymax>220</ymax>
+		</bndbox>
+	</object>
+</annotation>

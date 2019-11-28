@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02107683</folder>
+	<filename>n02107683_1958</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>339</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Bernese_mountain_dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>53</xmin>
+			<ymin>40</ymin>
+			<xmax>287</xmax>
+			<ymax>477</ymax>
+		</bndbox>
+	</object>
+</annotation>

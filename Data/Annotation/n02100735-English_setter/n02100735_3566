@@ -1,0 +1,37 @@
+<annotation>
+	<folder>02100735</folder>
+	<filename>n02100735_3566</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>227</width>
+		<height>187</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>English_setter</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>138</xmin>
+			<ymin>3</ymin>
+			<xmax>220</xmax>
+			<ymax>155</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>English_setter</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>7</xmin>
+			<ymin>82</ymin>
+			<xmax>154</xmax>
+			<ymax>160</ymax>
+		</bndbox>
+	</object>
+</annotation>

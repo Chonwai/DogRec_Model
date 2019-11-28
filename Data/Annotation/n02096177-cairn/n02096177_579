@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02096177</folder>
+	<filename>n02096177_579</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>473</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>cairn</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>33</xmin>
+			<ymin>0</ymin>
+			<xmax>359</xmax>
+			<ymax>351</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02108000</folder>
+	<filename>n02108000_326</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>806</width>
+		<height>762</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>EntleBucher</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>457</xmin>
+			<ymin>318</ymin>
+			<xmax>748</xmax>
+			<ymax>676</ymax>
+		</bndbox>
+	</object>
+</annotation>

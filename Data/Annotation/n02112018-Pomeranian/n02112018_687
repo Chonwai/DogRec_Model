@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02112018</folder>
+	<filename>n02112018_687</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>424</width>
+		<height>343</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Pomeranian</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>208</xmin>
+			<ymin>82</ymin>
+			<xmax>399</xmax>
+			<ymax>241</ymax>
+		</bndbox>
+	</object>
+</annotation>

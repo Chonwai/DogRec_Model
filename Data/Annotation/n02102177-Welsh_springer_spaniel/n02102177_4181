@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02102177</folder>
+	<filename>n02102177_4181</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>360</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Welsh_springer_spaniel</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>91</xmin>
+			<ymin>55</ymin>
+			<xmax>412</xmax>
+			<ymax>308</ymax>
+		</bndbox>
+	</object>
+</annotation>

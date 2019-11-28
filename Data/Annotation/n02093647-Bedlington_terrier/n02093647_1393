@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02093647</folder>
+	<filename>n02093647_1393</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>147</width>
+		<height>180</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Bedlington_terrier</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>9</xmin>
+			<ymin>11</ymin>
+			<xmax>146</xmax>
+			<ymax>179</ymax>
+		</bndbox>
+	</object>
+</annotation>

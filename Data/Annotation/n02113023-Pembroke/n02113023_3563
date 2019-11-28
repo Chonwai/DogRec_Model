@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02113023</folder>
+	<filename>n02113023_3563</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>378</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Pembroke</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>88</xmin>
+			<ymin>68</ymin>
+			<xmax>341</xmax>
+			<ymax>301</ymax>
+		</bndbox>
+	</object>
+</annotation>

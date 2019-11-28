@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02104365</folder>
+	<filename>n02104365_663</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>375</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>schipperke</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>127</xmin>
+			<ymin>33</ymin>
+			<xmax>307</xmax>
+			<ymax>304</ymax>
+		</bndbox>
+	</object>
+</annotation>

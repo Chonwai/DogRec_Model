@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02106382</folder>
+	<filename>n02106382_4789</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>200</width>
+		<height>250</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Bouvier_des_Flandres</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>0</xmin>
+			<ymin>13</ymin>
+			<xmax>146</xmax>
+			<ymax>249</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02113978</folder>
+	<filename>n02113978_118</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>350</width>
+		<height>280</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>Mexican_hairless</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>39</xmin>
+			<ymin>54</ymin>
+			<xmax>274</xmax>
+			<ymax>249</ymax>
+		</bndbox>
+	</object>
+</annotation>

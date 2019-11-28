@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02100236</folder>
+	<filename>n02100236_1838</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>600</width>
+		<height>301</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>German_short-haired_pointer</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>271</xmin>
+			<ymin>81</ymin>
+			<xmax>441</xmax>
+			<ymax>271</ymax>
+		</bndbox>
+	</object>
+</annotation>

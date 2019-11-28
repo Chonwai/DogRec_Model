@@ -1,0 +1,25 @@
+<annotation>
+	<folder>02099267</folder>
+	<filename>n02099267_5415</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>850</width>
+		<height>670</height>
+		<depth>3</depth>
+	</size>
+	<segment>0</segment>
+	<object>
+		<name>flat-coated_retriever</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>26</xmin>
+			<ymin>42</ymin>
+			<xmax>783</xmax>
+			<ymax>643</ymax>
+		</bndbox>
+	</object>
+</annotation>
