@@ -32,15 +32,15 @@ class Utils():
         for i in self.folderList[:self.N]:
             imgList = os.listdir(self.datasetPath + '/' + i)
             annotationList = os.listdir(self.annotationPath + '/' + i)
-            for j, k in zip(imgList, annotationList):
-                count = count + 1
+            for j, a in zip(imgList, annotationList):
                 # if (count % 2 == 0):
                 #     continue
                 imgPath = self.datasetPath + '/' + i + '/' + j
-                annotationPath = self.annotationPath + '/' + i + '/' + k
+                annotationPath = self.annotationPath + '/' + i + '/' + a
                 images.append(self.loadImg(imgPath, annotationPath, 168, 168))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
+                count = count + 1
             print("Finish to loading %d category: %s" % (count, i))
         print(len(labels))
         return images, labels
