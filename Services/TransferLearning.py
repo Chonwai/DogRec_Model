@@ -72,11 +72,11 @@ class TransferLearning:
         model.summary()
 
         model.compile(optimizer=optimizers.RMSprop(
-            lr=0.01), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
         model.fit(self.trainX, self.trainY, epochs=ep, validation_data=(self.testX, self.testY))
 
-        model.save_weights('Model/TF_VGG19_02.h5')
+        model.save_weights('Model/TF_VGG19_01.h5')
 
     def trainMobileNetV2(self, ep=10, batch=15):
 
