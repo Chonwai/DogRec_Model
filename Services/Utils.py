@@ -40,7 +40,7 @@ class Utils():
                 images.append(self.loadImg(imgPath, annotationPath, 168, 168))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
-                count = count + 1
+            count = count + 1
             print("Finish to loading %d category: %s" % (count, i))
         print(len(labels))
         return images, labels
