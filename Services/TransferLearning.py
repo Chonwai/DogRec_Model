@@ -72,32 +72,20 @@ class TransferLearning:
         model.summary()
 
         model.compile(optimizer=optimizers.RMSprop(
-            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+            lr=0.00001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
         model.fit(self.trainX, self.trainY, epochs=ep, validation_data=(self.testX, self.testY))
 
-        model.save_weights('Model/TF_VGG19_01.h5')
+        model.save_weights('Model/TF_VGG19_03.h5')
 
     def trainMobileNetV2(self, ep=10, batch=15):
 
-        baseModel = MobileNetV2(include_top=False, weights=None, input_shape=(128, 128, 3))
-
-        model = Sequential()
-
-        # for layer in baseModel.layers:
-        #     model.add(layer)
-        model.add(baseModel)
-        model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
-        model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(self.classN, activation='softmax'))
+        model = MobileNetV2(include_top=True, weights=None, input_shape=(168, 168, 3),  classes=self.classN)
 
         model.summary()
 
-        model.compile(optimizer=optimizers.Adam(
-            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+        model.compile(optimizer=optimizers.RMSprop(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
         model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(self.testX, self.testY))
 

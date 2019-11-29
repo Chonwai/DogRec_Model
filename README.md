@@ -1,7 +1,8 @@
 
 # How To Use
 
-py index.py [class] [epochs] [batch]
+py train.py [class] [epochs] [batch]
 
-epochs default = 10
-batch default = 15
+## Example
+
+py train.py 120 50 50
