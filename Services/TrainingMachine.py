@@ -1,5 +1,5 @@
 import os
-# os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
+os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
 import keras
 import numpy as np
 import matplotlib.pyplot as plt
@@ -48,6 +48,17 @@ class TrainingMachine:
         self.testX = np.array(self.testX)
         self.testY = np.array(self.testY)
 
+    def topKAccuracy(self, model, k = 3, testX = [], testY = []):
+        predict = model.predict_proba(testX)
+        count = 0
+        for i in range(len(predict)):
+            topK = sorted(range(len(predict[i])), key=lambda x: predict[i][x], reverse=True)[:k]
+            for j in topK:
+                if (j == np.argmax(testY[i])):
+                    count = count + 1
+        meanAccuracy = (count / len(predict)) * 100
+        print("Top " + str(k) + " Accuracy is: " + str(meanAccuracy))
+
     def trainTFVGG19(self, ep=10, batch=15):
         pretrainingModel = VGG19(weights='imagenet', include_top=False, input_shape=(168, 168, 3))
 
@@ -74,6 +85,10 @@ class TrainingMachine:
         model.fit(self.trainX, self.trainY, epochs=ep, validation_data=(self.testX, self.testY))
 
         model.save_weights('Model/TF_VGG19_06.h5')
+
+        self.topKAccuracy(model, k = 1, testX = self.testX, testY = self.testY)
+        self.topKAccuracy(model, k = 3, testX = self.testX, testY = self.testY)
+        self.topKAccuracy(model, k = 5, testX = self.testX, testY = self.testY)
 
     def trainTFMobileNetV2(self, ep=10, batch=15):
         pretrainingModel = MobileNetV2(weights='imagenet', include_top=False, input_shape=(160, 160, 3))
@@ -165,5 +180,4 @@ class TrainingMachine:
         result = predict[0]
         topK = sorted(range(len(result)),
                       key=lambda i: result[i], reverse=True)[:k]
-
         print(topK)
