@@ -33,11 +33,10 @@ class Utils():
             imgList = os.listdir(self.datasetPath + '/' + i)
             annotationList = os.listdir(self.annotationPath + '/' + i)
             for j, a in zip(imgList, annotationList):
-                # if (count % 2 == 0):
-                #     continue
                 imgPath = self.datasetPath + '/' + i + '/' + j
                 annotationPath = self.annotationPath + '/' + i + '/' + a
-                images.append(self.loadImg(imgPath, annotationPath, 168, 168))
+                # images.append(self.loadImg(imgPath, annotationPath, 168, 168))
+                images.append(self.loadImg(path=imgPath, x=168, y=168))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
             count = count + 1
@@ -56,7 +55,7 @@ class Utils():
             img = img.crop((xmin, ymin, xmax, ymax))
             img = img.convert('RGB')
             img = img.resize((x, y), Image.BILINEAR)
-        else:
+        elif (annotation == None):
             img = Image.open(path)
             img = img.convert('RGB')
             img = img.resize((x, y), Image.BILINEAR)
