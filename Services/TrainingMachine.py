@@ -17,7 +17,7 @@ from keras import optimizers
 from keras import metrics
 
 
-class TransferLearning:
+class TrainingMachine:
     def __init__(self, classN):
         self.trainX = []
         self.trainY = []

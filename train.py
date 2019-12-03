@@ -1,6 +1,6 @@
 import sys
 from Services.Utils import Utils
-from Services.TransferLearning import TransferLearning
+from Services.TrainingMachine import TrainingMachine
 
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -13,13 +13,13 @@ def train():
     print(sys.argv)
     utils = Utils(N=amount)
     x, y = utils.loadDataset()
-    transferLearning = TransferLearning(classN=amount)
-    transferLearning.init(x, y)
-    transferLearning.trainTFVGG19(epochs, batch)
-    # transferLearning.trainTFMobileNetV2(epochs, batch)
-    # transferLearning.trainMobileNetV2(epochs, batch)
-    # transferLearning.trainXception(epochs, batch)
-    # transferLearning.trainVGG19(epochs, batch)
+    trainingMachine = TrainingMachine(classN=amount)
+    trainingMachine.init(x, y)
+    trainingMachine.trainTFVGG19(epochs, batch)
+    # trainingMachine.trainTFMobileNetV2(epochs, batch)
+    # trainingMachine.trainMobileNetV2(epochs, batch)
+    # trainingMachine.trainXception(epochs, batch)
+    # trainingMachine.trainVGG19(epochs, batch)
 
 def main():
     train()
