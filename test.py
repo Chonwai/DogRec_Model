@@ -1,6 +1,6 @@
 import sys
 from Services.Utils import Utils
-from Services.TransferLearning import TransferLearning
+from Services.TrainingMachine import TrainingMachine
 
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -12,7 +12,7 @@ def test():
     print("Testing Case")
     utils = Utils(N=amount)
     img = utils.loadTestImg(path)
-    testing = TransferLearning(classN=amount)
+    testing = TrainingMachine(classN=amount)
     testing.eval(img, amount)
 
 def main():

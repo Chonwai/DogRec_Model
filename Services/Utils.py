@@ -6,7 +6,7 @@ import skimage.transform
 import xml.etree.ElementTree as ET
 
 class Utils():
-    def __init__(self, N, datasetPath='./Data/Training', annotationPath='./Data/Annotation'):
+    def __init__(self, N=120, datasetPath='./Data/Training', annotationPath='./Data/Annotation'):
         self.datasetPath = datasetPath
         self.annotationPath = annotationPath
         self.folderList = []
@@ -36,7 +36,7 @@ class Utils():
                 imgPath = self.datasetPath + '/' + i + '/' + j
                 annotationPath = self.annotationPath + '/' + i + '/' + a
                 # images.append(self.loadImg(imgPath, annotationPath, 168, 168))
-                images.append(self.loadImg(path=imgPath, x=168, y=168))
+                images.append(self.loadImg(path=imgPath, x=224, y=224))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
             count = count + 1
@@ -62,7 +62,48 @@ class Utils():
         return img
 
     def loadTestImg(self, path, x=224, y=224):
-        img = skimage.io.imread(path)
-        img = img / 255.0
-        resizeImg = skimage.transform.resize(img, (224, 224, 3))[None, :, :, :]
-        return resizeImg
+        # img = skimage.io.imread(path)
+        img = Image.open(path)
+        img = img.convert('RGB')
+        img = img.resize((x, y), Image.BILINEAR)
+        # resizeImg = skimage.transform.resize(img, (224, 224, 3))[None, :, :, :]
+        return img
+
+    def showReport(self, history):
+        # Show the accuracy report.
+        plt.plot(history.history['acc'])
+        plt.plot(history.history['val_acc'])
+        plt.title('Model Accuracy')
+        plt.ylabel('accuracy')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper left') 
+        plt.show()
+
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('Model Loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper left') 
+        plt.show()
+
+        plt.plot(history.history['mean_squared_error'])
+        plt.plot(history.history['val_mean_squared_error'])
+        plt.title('Model Mean Squared Error')
+        plt.ylabel('mean_squared_error')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper left') 
+        plt.show()
+
+        plt.plot(history.history['lr'])
+        plt.title('Model Learning Rate')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.show()
+
+
+
+
+
+
+
