@@ -86,7 +86,7 @@ class TrainingMachine:
 
     def trainTFVGG19(self, ep=10, batch=15):
         pretrainingModel = VGG19(
-            weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+            weights='imagenet', include_top=False, input_shape=(160, 160, 3))
 
         self.model = Sequential()
 
