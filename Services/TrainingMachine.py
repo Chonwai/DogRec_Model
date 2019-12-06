@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from Services.Utils import Utils
 
 from sklearn.model_selection import train_test_split
+from keras import backend as K
 from keras.applications.vgg19 import VGG19
 from keras.applications.vgg16 import VGG16
 from keras.applications.xception import Xception
@@ -27,14 +28,23 @@ class TrainingMachine:
         self.testX = []
         self.testY = []
         self.classN = classN
-        self.reducelr = ReduceLROnPlateau(monitor='val_acc',
+        self.model = None
+        self.reduceLR = ReduceLROnPlateau(monitor='val_loss',
                                           factor=np.sqrt(.1),
-                                          patience=4,
+                                          patience=5,
                                           verbose=1,
                                           mode='auto',
                                           min_delta=.0001,
                                           cooldown=0,
                                           min_lr=0.00000001)
+        self.earlyStop = EarlyStopping(monitor='val_loss',
+                                       min_delta=.0001,
+                                       patience=15,
+                                       verbose=1,
+                                       mode='auto',
+                                       baseline=None,
+                                       restore_best_weights=True)
+        self.lambdaCallback = LambdaCallback(on_epoch_begin=self.epochBegin)
 
     def init(self, x, y):
         trainX, testX, trainY, testY = train_test_split(
@@ -71,38 +81,41 @@ class TrainingMachine:
         meanAccuracy = (count / len(predict)) * 100
         print("Top " + str(k) + " Accuracy is: " + str(meanAccuracy))
 
+    def epochBegin(self, epoch, logs):
+        print("Start of " + str(epoch) + " Epoch. Learning Rate: " + str(K.eval(self.model.optimizer.lr)))
+
     def trainTFVGG19(self, ep=10, batch=15):
         pretrainingModel = VGG19(
             weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
-        model = Sequential()
+        self.model = Sequential()
 
         for layer in pretrainingModel.layers:
-            model.add(layer)
+            self.model.add(layer)
 
-        for layer in model.layers:
+        for layer in self.model.layers:
             layer.trainable = False
 
-        model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
-        model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.3))
-        model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.3))
-        model.add(Dense(self.classN, activation='softmax'))
+        self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(self.classN, activation='softmax'))
 
-        model.summary()
+        self.model.summary()
 
-        model.compile(optimizer=optimizers.Adam(
-            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+        self.model.compile(optimizer=optimizers.Adam(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
-        history = model.fit(self.trainX, self.trainY, epochs=ep, validation_data=(
-            self.testX, self.testY), callbacks=[self.reducelr])
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, validation_data=(
+            self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
 
-        model.save_weights('Model/TF_VGG19_100.h5')
+        self.model.save_weights('Model/TF_VGG19_100b.h5')
 
-        self.topKAccuracy(model, k=1, testX=self.testX, testY=self.testY)
-        self.topKAccuracy(model, k=3, testX=self.testX, testY=self.testY)
-        self.topKAccuracy(model, k=5, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
         self.utils.showReport(history)
 
     def trainTFMobileNetV2(self, ep=10, batch=15):
