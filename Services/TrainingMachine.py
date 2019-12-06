@@ -28,12 +28,8 @@ class TrainingMachine:
         self.testX = []
         self.testY = []
         self.classN = classN
-<<<<<<< HEAD
         self.model = None
         self.reduceLR = ReduceLROnPlateau(monitor='val_loss',
-=======
-        self.reducelr = ReduceLROnPlateau(monitor='val_loss',
->>>>>>> Change: Tune some parameters.
                                           factor=np.sqrt(.1),
                                           patience=5,
                                           verbose=1,
