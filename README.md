@@ -1,6 +1,6 @@
 # How To Use
 
-py train.py [class][epochs] [batch]__
+py train.py [class][epochs] [batch] <br />
 py test.py [path]
 
 ## Example
