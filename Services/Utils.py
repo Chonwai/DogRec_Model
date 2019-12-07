@@ -4,9 +4,10 @@ from PIL import Image
 import skimage.io
 import skimage.transform
 import xml.etree.ElementTree as ET
+import numpy as np
 
 class Utils():
-    def __init__(self, N=120, datasetPath='./Data/Training', annotationPath='./Data/Annotation'):
+    def __init__(self, N=120, datasetPath='./Data/Training/', annotationPath='./Data/Annotation/'):
         self.datasetPath = datasetPath
         self.annotationPath = annotationPath
         self.folderList = []
@@ -23,13 +24,14 @@ class Utils():
             if (i == '.DS_Store'):
                 continue
             self.folderList.append(i)
+        self.folderList.sort()
 
     def loadDataset(self):
         images = []
         labels = []
         self.readDatasetFolderName()
         count = 0
-        for i in self.folderList[:self.N]:
+        for i in self.folderList[0:self.N]:
             imgList = os.listdir(self.datasetPath + '/' + i)
             annotationList = os.listdir(self.annotationPath + '/' + i)
             for j, a in zip(imgList, annotationList):
@@ -62,12 +64,13 @@ class Utils():
         return img
 
     def loadTestImg(self, path, x=224, y=224):
-        # img = skimage.io.imread(path)
+        testImg = []
         img = Image.open(path)
         img = img.convert('RGB')
         img = img.resize((x, y), Image.BILINEAR)
-        # resizeImg = skimage.transform.resize(img, (224, 224, 3))[None, :, :, :]
-        return img
+        testImg.append(np.array(img))
+        testImg = np.array(testImg)
+        return testImg
 
     def showReport(self, history):
         # Show the accuracy report.

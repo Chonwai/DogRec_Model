@@ -21,7 +21,7 @@ from keras.callbacks import *
 
 
 class TrainingMachine:
-    def __init__(self, classN):
+    def __init__(self, classN=120):
         self.utils = Utils()
         self.trainX = []
         self.trainY = []
@@ -82,7 +82,8 @@ class TrainingMachine:
         print("Top " + str(k) + " Accuracy is: " + str(meanAccuracy))
 
     def epochBegin(self, epoch, logs):
-        print("Start of " + str(epoch) + " Epoch. Learning Rate: " + str(K.eval(self.model.optimizer.lr)))
+        print("Start of " + str(epoch) + " Epoch. Learning Rate: " +
+              str(K.eval(self.model.optimizer.lr)))
 
     def trainTFVGG19(self, ep=10, batch=15):
         pretrainingModel = VGG19(
@@ -96,7 +97,8 @@ class TrainingMachine:
         for layer in self.model.layers:
             layer.trainable = False
 
-        self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(GlobalAveragePooling2D(
+            input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(1024, activation='relu'))
         self.model.add(Dropout(0.5))
         self.model.add(Dense(1024, activation='relu'))
@@ -203,17 +205,18 @@ class TrainingMachine:
         for layer in pretrainingModel.layers:
             model.add(layer)
 
-        model.add(GlobalAveragePooling2D(input_shape=img.shape[1:]))
+        model.add(GlobalAveragePooling2D())
         model.add(Dense(1024, activation='relu'))
         model.add(Dropout(0.3))
         model.add(Dense(1024, activation='relu'))
         model.add(Dropout(0.3))
         model.add(Dense(self.classN, activation='softmax'))
 
-        model.load_weights('Model/TF_VGG19_06.h5')
+        model.load_weights('Model/TF_VGG19_100b.h5')
 
         predict = model.predict(img)
         result = predict[0]
         topK = sorted(range(len(result)),
                       key=lambda i: result[i], reverse=True)[:k]
         print(topK)
+        return topK
