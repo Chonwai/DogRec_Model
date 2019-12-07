@@ -34,12 +34,12 @@ class TrainingMachine:
                                           patience=5,
                                           verbose=1,
                                           mode='auto',
-                                          min_delta=0.0001,
+                                          min_delta=.0001,
                                           cooldown=0,
                                           min_lr=0.00000001)
         self.earlyStop = EarlyStopping(monitor='val_loss',
                                        min_delta=.0001,
-                                       patience=15,
+                                       patience=20,
                                        verbose=1,
                                        mode='auto',
                                        baseline=None,
@@ -86,7 +86,7 @@ class TrainingMachine:
 
     def trainTFVGG19(self, ep=10, batch=15):
         pretrainingModel = VGG19(
-            weights='imagenet', include_top=False, input_shape=(160, 160, 3))
+            weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
         self.model = Sequential()
 
@@ -98,9 +98,9 @@ class TrainingMachine:
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.5))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.5))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         self.model.summary()
@@ -111,7 +111,7 @@ class TrainingMachine:
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, validation_data=(
             self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_VGG19_100b.h5')
+        self.model.save_weights('Model/TF_VGG19_100e.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
