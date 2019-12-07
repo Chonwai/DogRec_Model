@@ -68,7 +68,9 @@ class Utils():
         img = Image.open(path)
         img = img.convert('RGB')
         img = img.resize((x, y), Image.BILINEAR)
-        testImg.append(np.array(img))
+        img = np.array(img)
+        print(img)
+        testImg.append(img)
         testImg = np.array(testImg)
         return testImg
 
@@ -82,6 +84,7 @@ class Utils():
         plt.legend(['train', 'test'], loc='upper left') 
         plt.show()
 
+        # Show the loss report.
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
         plt.title('Model Loss')
@@ -90,6 +93,7 @@ class Utils():
         plt.legend(['train', 'test'], loc='upper left') 
         plt.show()
 
+        # Show the error report.
         plt.plot(history.history['mean_squared_error'])
         plt.plot(history.history['val_mean_squared_error'])
         plt.title('Model Mean Squared Error')
@@ -98,9 +102,10 @@ class Utils():
         plt.legend(['train', 'test'], loc='upper left') 
         plt.show()
 
+        # Show the learning rate report.
         plt.plot(history.history['lr'])
         plt.title('Model Learning Rate')
-        plt.ylabel('loss')
+        plt.ylabel('learning rate')
         plt.xlabel('epoch')
         plt.show()
 

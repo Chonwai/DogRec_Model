@@ -17,6 +17,7 @@ from keras.models import Sequential, Model
 from keras.layers import Activation, Dropout, Flatten, Dense, GlobalAveragePooling2D, GlobalAveragePooling1D
 from keras import optimizers
 from keras import metrics
+from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import *
 
 
@@ -45,6 +46,11 @@ class TrainingMachine:
                                        baseline=None,
                                        restore_best_weights=True)
         self.lambdaCallback = LambdaCallback(on_epoch_begin=self.epochBegin)
+        self.dataGen = ImageDataGenerator(horizontal_flip=True,
+                                          rescale=1/255,
+                                          width_shift_range=0.1,
+                                          zoom_range=0.2,
+                                          shear_range=0.2)
 
     def init(self, x, y):
         trainX, testX, trainY, testY = train_test_split(
@@ -110,8 +116,12 @@ class TrainingMachine:
         self.model.compile(optimizer=optimizers.Adam(
             lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
-        history = self.model.fit(self.trainX, self.trainY, epochs=ep, validation_data=(
-            self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
+        # history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+        #     self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
+
+        trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
+
+        history = self.model.fit_generator(trainBatch, epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
 
         self.model.save_weights('Model/TF_VGG19_100e.h5')
 
