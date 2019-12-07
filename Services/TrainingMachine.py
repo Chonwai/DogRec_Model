@@ -218,5 +218,4 @@ class TrainingMachine:
         result = predict[0]
         topK = sorted(range(len(result)),
                       key=lambda i: result[i], reverse=True)[:k]
-        print(topK)
         return topK
