@@ -31,26 +31,22 @@ class TrainingMachine:
         self.classN = classN
         self.model = None
         self.reduceLR = ReduceLROnPlateau(monitor='val_loss',
-                                          factor=np.sqrt(.1),
+                                          factor=0.1,
                                           patience=5,
                                           verbose=1,
                                           mode='auto',
-                                          min_delta=.0001,
+                                          min_delta=.0002,
                                           cooldown=0,
-                                          min_lr=0.00000001)
+                                          min_lr=0.000000001)
         self.earlyStop = EarlyStopping(monitor='val_loss',
-                                       min_delta=.0001,
+                                       min_delta=.0002,
                                        patience=20,
                                        verbose=1,
                                        mode='auto',
                                        baseline=None,
                                        restore_best_weights=True)
         self.lambdaCallback = LambdaCallback(on_epoch_begin=self.epochBegin)
-        self.dataGen = ImageDataGenerator(horizontal_flip=True,
-                                          rescale=1/255,
-                                          width_shift_range=0.1,
-                                          zoom_range=0.2,
-                                          shear_range=0.2)
+        self.dataGen = ImageDataGenerator(horizontal_flip=True)
 
     def init(self, x, y):
         trainX, testX, trainY, testY = train_test_split(
@@ -113,7 +109,7 @@ class TrainingMachine:
 
         self.model.summary()
 
-        self.model.compile(optimizer=optimizers.Adam(
+        self.model.compile(optimizer=optimizers.Nadam(
             lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
         # history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
@@ -121,9 +117,9 @@ class TrainingMachine:
 
         trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
 
-        history = self.model.fit_generator(trainBatch, epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
+        history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
 
-        self.model.save_weights('Model/TF_VGG19_100e.h5')
+        self.model.save_weights('Model/TF_VGG19_200b.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
@@ -132,9 +128,9 @@ class TrainingMachine:
 
     def trainTFMobileNetV2(self, ep=10, batch=15):
         pretrainingModel = MobileNetV2(
-            weights='imagenet', include_top=False, input_shape=(160, 160, 3))
+            weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
-        model = Sequential()
+        self.model = Sequential()
 
         # for layer in pretrainingModel.layers:
         #     model.add(layer)
@@ -144,24 +140,36 @@ class TrainingMachine:
 
         # pretrainingModel.trainable = False
 
-        model.add(pretrainingModel)
+        self.model.add(pretrainingModel)
 
-        model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
-        model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(self.classN, activation='softmax'))
+        self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(512, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(self.classN, activation='softmax'))
 
-        model.summary()
+        self.model.summary()
 
-        model.compile(optimizer=optimizers.RMSprop(
-            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+        self.model.compile(optimizer=optimizers.Adam(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
-        model.fit(self.trainX, self.trainY, epochs=ep,
-                  validation_data=(self.testX, self.testY))
+        # model.fit(self.trainX, self.trainY, epochs=ep,
+        #           validation_data=(self.testX, self.testY))
 
-        model.save_weights('Model/TF_MobileNetV2_01.h5')
+        trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
+
+        history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
+
+        self.model.save_weights('Model/TF_MobileNetV2_100b.h5')
+
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        self.utils.showReport(history)
+
 
     def trainMobileNetV2(self, ep=10, batch=15):
 
@@ -222,7 +230,7 @@ class TrainingMachine:
         model.add(Dropout(0.3))
         model.add(Dense(self.classN, activation='softmax'))
 
-        model.load_weights('Model/TF_VGG19_100b.h5')
+        model.load_weights('Model/TF_MobileNetV2_100a.h5')
 
         predict = model.predict(img)
         result = predict[0]
