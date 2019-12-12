@@ -15,11 +15,7 @@ def train():
     x, y = utils.loadDataset()
     trainingMachine = TrainingMachine(classN=amount)
     trainingMachine.init(x, y)
-    # trainingMachine.trainTFVGG19(epochs, batch)
     trainingMachine.trainTFMobileNetV2(epochs, batch)
-    # trainingMachine.trainMobileNetV2(epochs, batch)
-    # trainingMachine.trainXception(epochs, batch)
-    # trainingMachine.trainVGG19(epochs, batch)
 
 def main():
     train()

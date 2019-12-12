@@ -132,32 +132,19 @@ class TrainingMachine:
 
         self.model = Sequential()
 
-        # for layer in pretrainingModel.layers:
-        #     model.add(layer)
-
-        # for layer in model.layers:
-        #     layer.trainable = False
-
-        # pretrainingModel.trainable = False
-
         self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.3))
-        self.model.add(Dense(512, activation='relu'))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.5))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.5))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.Adam(
             lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
-
-        # model.fit(self.trainX, self.trainY, epochs=ep,
-        #           validation_data=(self.testX, self.testY))
 
         trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
 
@@ -215,25 +202,26 @@ class TrainingMachine:
         model.save_weights('Model/20191121_MobileNetV2.h5')
 
     def eval(self, img, k=5):
-        pretrainingModel = VGG19(
+        pretrainingModel = MobileNetV2(
             weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
-        model = Sequential()
+        self.model = Sequential()
 
-        for layer in pretrainingModel.layers:
-            model.add(layer)
+        self.model.add(pretrainingModel)
 
-        model.add(GlobalAveragePooling2D())
-        model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.3))
-        model.add(Dense(1024, activation='relu'))
-        model.add(Dropout(0.3))
-        model.add(Dense(self.classN, activation='softmax'))
+        self.model.add(GlobalAveragePooling2D())
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(self.classN, activation='softmax'))
 
-        model.load_weights('Model/TF_MobileNetV2_100a.h5')
+        self.model.load_weights('Model/TF_MobileNetV2_100a.h5')
 
-        predict = model.predict(img)
+        predict = self.model.predict(img)
+        probability = self.model.predict_proba(img)[0]
         result = predict[0]
         topK = sorted(range(len(result)),
                       key=lambda i: result[i], reverse=True)[:k]
-        return topK
+        topKPercentage = probability[topK[:k]]
+        return topK, topKPercentage

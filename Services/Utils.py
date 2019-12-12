@@ -69,10 +69,13 @@ class Utils():
         img = img.convert('RGB')
         img = img.resize((x, y), Image.BILINEAR)
         img = np.array(img)
-        print(img)
         testImg.append(img)
         testImg = np.array(testImg)
         return testImg
+
+    def showPredictionResult(self, result, percentage, dogs):
+        for i in range(len(result)):
+            print(str(round(percentage[i]*100, 2)) + '% probability is ' + dogs[result[i]])
 
     def showReport(self, history):
         # Show the accuracy report.
