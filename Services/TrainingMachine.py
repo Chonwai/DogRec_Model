@@ -46,7 +46,7 @@ class TrainingMachine:
                                        baseline=None,
                                        restore_best_weights=True)
         self.lambdaCallback = LambdaCallback(on_epoch_begin=self.epochBegin)
-        self.dataGen = ImageDataGenerator(horizontal_flip=True)
+        self.dataGen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
 
     def init(self, x, y):
         trainX, testX, trainY, testY = train_test_split(
@@ -96,8 +96,10 @@ class TrainingMachine:
         for layer in pretrainingModel.layers:
             self.model.add(layer)
 
-        for layer in self.model.layers:
-            layer.trainable = False
+        # for layer in self.model.layers:
+        #     layer.trainable = False
+    
+        # self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D(
             input_shape=self.trainX.shape[1:]))
@@ -157,7 +159,69 @@ class TrainingMachine:
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
         self.utils.showReport(history)
 
+    def trainTFXception(self, ep=10, batch=10):
+        pretrainingModel = Xception(include_top=False, weights='imagenet', input_shape=(299, 299, 3))
 
+        self.model = Sequential()
+
+        self.model.add(pretrainingModel)
+
+        self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(self.classN, activation='softmax'))
+
+        self.model.summary()
+
+        self.model.compile(optimizer=optimizers.RMSprop(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+
+        # trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
+
+        # history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
+
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
+
+        self.model.save_weights('Model/TF_Xception_100b.h5')
+
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        self.utils.showReport(history)
+
+    def trainTFInceptionResNetV2(self, ep=10, batch=15):
+        pretrainingModel = InceptionResNetV2(
+            weights='imagenet', include_top=False, input_shape=(299, 299, 3))
+
+        self.model = Sequential()
+
+        self.model.add(pretrainingModel)
+
+        self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(self.classN, activation='softmax'))
+
+        self.model.summary()
+
+        self.model.compile(optimizer=optimizers.Adam(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
+
+        self.model.save_weights('Model/TF_InceptionResNetV2_100a.h5')
+
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        self.utils.showReport(history)
+    
     def trainMobileNetV2(self, ep=10, batch=15):
 
         model = MobileNetV2(include_top=True, weights=None,

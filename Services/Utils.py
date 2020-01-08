@@ -37,8 +37,8 @@ class Utils():
             for j, a in zip(imgList, annotationList):
                 imgPath = self.datasetPath + '/' + i + '/' + j
                 annotationPath = self.annotationPath + '/' + i + '/' + a
-                images.append(self.loadImg(imgPath, annotationPath, 224, 224))
-                # images.append(self.loadImg(path=imgPath, x=160, y=160))
+                images.append(self.loadImg(imgPath, annotationPath, 299, 299))
+                # images.append(self.loadImg(path=imgPath, x=299, y=299))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
             count = count + 1

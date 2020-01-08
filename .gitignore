@@ -1,2 +1,6 @@
 Model/TransferLearning.h5
 Model/*
+
+*.pyc
+
+Services/__pycache__
