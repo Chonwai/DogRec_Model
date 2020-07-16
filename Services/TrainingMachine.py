@@ -2,6 +2,7 @@ import keras
 import numpy as np
 import matplotlib.pyplot as plt
 from Services.Utils import Utils
+from Services.WriteResultServices import WriteResultServices
 
 from sklearn.model_selection import train_test_split
 from keras import backend as K
@@ -12,7 +13,6 @@ from keras.applications.inception_v3 import InceptionV3
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.applications.mobilenet_v2 import MobileNetV2
 from keras.applications.densenet import DenseNet201, DenseNet169, DenseNet121
-from keras.applications.resnet_v2 import ResNet101V2, ResNet152V2, ResNet50V2
 from keras.models import Sequential, Model
 from keras.layers import Activation, Dropout, Flatten, Dense, GlobalAveragePooling2D, GlobalAveragePooling1D
 from keras import optimizers
@@ -236,6 +236,7 @@ class TrainingMachine:
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        WriteResultServices.create(history, 'TF_Xception_Dropout05_1024_512_1024')
         self.utils.showReport(history)
 
     def trainTFInceptionResNetV2(self, ep=10, batch=15):
