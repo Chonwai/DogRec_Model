@@ -1,5 +1,3 @@
-import os
-os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
 import keras
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,13 +10,16 @@ from keras.applications.vgg16 import VGG16
 from keras.applications.xception import Xception
 from keras.applications.inception_v3 import InceptionV3
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
-from keras.applications.mobilenetv2 import MobileNetV2
+from keras.applications.mobilenet_v2 import MobileNetV2
+from keras.applications.densenet import DenseNet201, DenseNet169, DenseNet121
+from keras.applications.resnet_v2 import ResNet101V2, ResNet152V2, ResNet50V2
 from keras.models import Sequential, Model
 from keras.layers import Activation, Dropout, Flatten, Dense, GlobalAveragePooling2D, GlobalAveragePooling1D
 from keras import optimizers
 from keras import metrics
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import *
+from keras.utils import multi_gpu_model
 
 
 class TrainingMachine:
@@ -30,17 +31,18 @@ class TrainingMachine:
         self.testY = []
         self.classN = classN
         self.model = None
+        self.parallelModel = None
         self.reduceLR = ReduceLROnPlateau(monitor='val_loss',
-                                          factor=0.1,
-                                          patience=5,
+                                          factor=0.001,
+                                          patience=20,
                                           verbose=1,
                                           mode='auto',
-                                          min_delta=.0002,
+                                          min_delta=.0001,
                                           cooldown=0,
-                                          min_lr=0.000000001)
+                                          min_lr=0.0000001)
         self.earlyStop = EarlyStopping(monitor='val_loss',
                                        min_delta=.0002,
-                                       patience=20,
+                                       patience=30,
                                        verbose=1,
                                        mode='auto',
                                        baseline=None,
@@ -71,6 +73,14 @@ class TrainingMachine:
         self.testX = np.array(self.testX)
         self.testY = np.array(self.testY)
 
+    def top3Accuracy(self, y_true, y_pred):
+        return keras.metrics.top_k_categorical_accuracy(y_true, y_pred, k=3)
+        self.__name__ = "top3Accuracy"
+    
+    def top5Accuracy(self, y_true, y_pred):
+        return keras.metrics.top_k_categorical_accuracy(y_true, y_pred, k=5)
+        self.__name__ = "top5Accuracy"
+
     def topKAccuracy(self, model, k=3, testX=[], testY=[]):
         predict = model.predict_proba(testX)
         count = 0
@@ -93,35 +103,66 @@ class TrainingMachine:
 
         self.model = Sequential()
 
-        for layer in pretrainingModel.layers:
-            self.model.add(layer)
+        # for layer in pretrainingModel.layers:
+        #     self.model.add(layer)
 
         # for layer in self.model.layers:
         #     layer.trainable = False
     
-        # self.model.add(pretrainingModel)
+        self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D(
             input_shape=self.trainX.shape[1:]))
-        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dense(4096, activation='relu'))
         self.model.add(Dropout(0.5))
-        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dense(2048, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(4096, activation='relu'))
         self.model.add(Dropout(0.5))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         self.model.summary()
 
-        self.model.compile(optimizer=optimizers.Nadam(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+        self.model.compile(optimizer=optimizers.RMSprop(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
-        # history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
-        #     self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.reduceLR, self.lambdaCallback])
 
-        trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
+        self.model.save_weights('Model/TF_VGG19_Dropout05_4096_2048_4096.h5')
 
-        history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        self.utils.showReport(history)
 
-        self.model.save_weights('Model/TF_VGG19_200b.h5')
+    def trainTFVGG16(self, ep=10, batch=15):
+        pretrainingModel = VGG16(
+            weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+
+        self.model = Sequential()
+    
+        self.model.add(pretrainingModel)
+
+        self.model.add(GlobalAveragePooling2D(
+            input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(4096, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(2048, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(4096, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(self.classN, activation='softmax'))
+
+        self.model.summary()
+
+        self.model.compile(optimizer=optimizers.RMSprop(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.reduceLR, self.lambdaCallback])
+
+        self.model.save_weights('Model/TF_VGG16_200a.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
@@ -130,29 +171,30 @@ class TrainingMachine:
 
     def trainTFMobileNetV2(self, ep=10, batch=15):
         pretrainingModel = MobileNetV2(
-            weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+            weights=None, include_top=False, input_shape=(224, 224, 3))
 
         self.model = Sequential()
 
         self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(4096, activation='relu'))
+        self.model.add(Dropout(0.3))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.5))
-        self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.5))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(4096, activation='relu'))
+        self.model.add(Dropout(0.3))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.Adam(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
-        trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.lambdaCallback])
 
-        history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
-
-        self.model.save_weights('Model/TF_MobileNetV2_100b.h5')
+        self.model.save_weights('Model/TF_MobileNetV2_100c.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
@@ -160,7 +202,7 @@ class TrainingMachine:
         self.utils.showReport(history)
 
     def trainTFXception(self, ep=10, batch=10):
-        pretrainingModel = Xception(include_top=False, weights='imagenet', input_shape=(299, 299, 3))
+        pretrainingModel = Xception(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
 
         self.model = Sequential()
 
@@ -168,24 +210,28 @@ class TrainingMachine:
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(512, activation='relu'))
+        self.model.add(Dropout(0.5))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.5))
         self.model.add(Dense(self.classN, activation='softmax'))
+
+        # self.model = multi_gpu_model(self.model, 2)
 
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.RMSprop(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
-        # trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
+        trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
 
-        # history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
+        history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
 
-        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
-            self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
+        # history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+        #     self.testX, self.testY), callbacks=[self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_Xception_100b.h5')
+        self.model.save_weights('Model/TF_Xception_Dropout05_1024_512_1024.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
@@ -201,21 +247,25 @@ class TrainingMachine:
         self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(4096, activation='relu'))
+        # self.model.add(Dropout(0.2))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.3))
+        # self.model.add(Dropout(0.2))
         self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.3))
+        # self.model.add(Dropout(0.2))
+        self.model.add(Dense(4096, activation='relu'))
+        # self.model.add(Dropout(0.2))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         self.model.summary()
 
-        self.model.compile(optimizer=optimizers.Adam(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+        self.model.compile(optimizer=optimizers.RMSprop(
+            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
-            self.testX, self.testY), callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback])
+            self.testX, self.testY), callbacks=[self.reduceLR, self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_InceptionResNetV2_100a.h5')
+        self.model.save_weights('Model/TF_InceptionResNetV2_NoDropout_4096_1024_1026_4096.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)

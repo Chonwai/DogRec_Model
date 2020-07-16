@@ -37,8 +37,8 @@ class Utils():
             for j, a in zip(imgList, annotationList):
                 imgPath = self.datasetPath + '/' + i + '/' + j
                 annotationPath = self.annotationPath + '/' + i + '/' + a
-                images.append(self.loadImg(imgPath, annotationPath, 299, 299))
-                # images.append(self.loadImg(path=imgPath, x=299, y=299))
+                # images.append(self.loadImg(imgPath, annotationPath, 299, 299))
+                images.append(self.loadImg(path=imgPath, x=224, y=224))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
             count = count + 1
@@ -79,15 +79,17 @@ class Utils():
 
     def showReport(self, history):
         # Show the accuracy report.
-        plt.plot(history.history['acc'])
-        plt.plot(history.history['val_acc'])
+        plt.figure('Accuracy')
+        plt.plot(history.history['accuracy'])
+        plt.plot(history.history['val_accuracy'])
         plt.title('Model Accuracy')
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
-        plt.legend(['train', 'test'], loc='upper left') 
+        plt.legend(['train', 'test'], loc='upper left')
         plt.show()
 
         # Show the loss report.
+        plt.figure('Loss')
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
         plt.title('Model Loss')
@@ -97,8 +99,9 @@ class Utils():
         plt.show()
 
         # Show the error report.
-        plt.plot(history.history['mean_squared_error'])
-        plt.plot(history.history['val_mean_squared_error'])
+        plt.figure('Error')
+        plt.plot(history.history['mse'])
+        plt.plot(history.history['val_mse'])
         plt.title('Model Mean Squared Error')
         plt.ylabel('mean_squared_error')
         plt.xlabel('epoch')
@@ -106,15 +109,9 @@ class Utils():
         plt.show()
 
         # Show the learning rate report.
+        plt.figure('Learning Rate')
         plt.plot(history.history['lr'])
         plt.title('Model Learning Rate')
         plt.ylabel('learning rate')
         plt.xlabel('epoch')
         plt.show()
-
-
-
-
-
-
-
