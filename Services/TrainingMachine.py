@@ -48,7 +48,7 @@ class TrainingMachine:
                                        baseline=None,
                                        restore_best_weights=True)
         self.lambdaCallback = LambdaCallback(on_epoch_begin=self.epochBegin)
-        self.dataGen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
+        self.dataGen = ImageDataGenerator(width_shift_range=0.1, height_shift_range=0.1, featurewise_center=True, featurewise_std_normalization=True, rotation_range=15, rescale=1./255, shear_range=0.1, zoom_range=0.2, horizontal_flip=True, channel_shift_range=50)
 
     def init(self, x, y):
         trainX, testX, trainY, testY = train_test_split(
@@ -202,18 +202,18 @@ class TrainingMachine:
         self.utils.showReport(history)
 
     def trainTFXception(self, ep=10, batch=10):
-        pretrainingModel = Xception(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
+        pretrainingModel = Xception(include_top=False, weights='imagenet', input_shape=(299, 299, 3))
 
         self.model = Sequential()
 
         self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
-        self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.5))
-        self.model.add(Dense(512, activation='relu'))
+        self.model.add(Dense(2048, activation='relu'))
         self.model.add(Dropout(0.5))
         self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(2048, activation='relu'))
         self.model.add(Dropout(0.5))
         self.model.add(Dense(self.classN, activation='softmax'))
 
@@ -222,21 +222,21 @@ class TrainingMachine:
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.RMSprop(
-            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
-        trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
+        # trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
 
-        history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
+        # history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
 
-        # history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
-        #     self.testX, self.testY), callbacks=[self.lambdaCallback])
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_Xception_Dropout05_1024_512_1024.h5')
+        self.model.save_weights('Model/TF_Xception_Dropout05_2048_1024_2048.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
-        WriteResultServices.create(history, 'TF_Xception_Dropout05_1024_512_1024')
+        WriteResultServices.create(history, 'TF_Xception_Dropout05_1024_2048_2048')
         self.utils.showReport(history)
 
     def trainTFInceptionResNetV2(self, ep=10, batch=15):
