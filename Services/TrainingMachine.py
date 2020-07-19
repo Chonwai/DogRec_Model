@@ -222,7 +222,7 @@ class TrainingMachine:
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.RMSprop(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+            lr=0.00001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
         # trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
 
