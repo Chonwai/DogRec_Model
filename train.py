@@ -3,6 +3,7 @@ from Services.Utils import Utils
 from Services.TrainingMachine import TrainingMachine
 import os
 # os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -20,11 +21,11 @@ def train():
     x, y = utils.loadDataset()
     trainingMachine = TrainingMachine(classN=amount)
     trainingMachine.init(x, y)
-    # trainingMachine.trainTFMobileNetV2(epochs, batch)
+    trainingMachine.trainTFMobileNetV2(epochs, batch)
     # trainingMachine.trainTFVGG19(epochs, batch)
     # trainingMachine.trainTFVGG16(epochs, batch)
     # trainingMachine.trainTFInceptionResNetV2(epochs, batch)
-    trainingMachine.trainTFXception(epochs, batch)
+    # trainingMachine.trainTFXception(epochs, batch)
 
 def main():
     train()
