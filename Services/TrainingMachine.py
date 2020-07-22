@@ -189,17 +189,17 @@ class TrainingMachine:
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.Adam(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
             self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_MobileNetV2_Dropout05_1280_960_1280_validation.h5')
+        self.model.save_weights('Model/TF_MobileNetV2_Dropout05_1280_960_1280.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
-        WriteResultServices.create(history, 'TF_MobileNetV2_Dropout05_1280_960_1280_validation')
+        WriteResultServices.create(history, 'TF_MobileNetV2_Dropout05_1280_960_1280')
         self.utils.showReport(history)
 
     def trainTFXception(self, ep=10, batch=10):
@@ -249,29 +249,28 @@ class TrainingMachine:
         self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
-        self.model.add(Dense(4096, activation='relu'))
-        # self.model.add(Dropout(0.2))
-        self.model.add(Dense(1024, activation='relu'))
-        # self.model.add(Dropout(0.2))
-        self.model.add(Dense(1024, activation='relu'))
-        # self.model.add(Dropout(0.2))
-        self.model.add(Dense(4096, activation='relu'))
-        # self.model.add(Dropout(0.2))
+        self.model.add(Dense(1536, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(1536, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(1536, activation='relu'))
+        self.model.add(Dropout(0.5))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.RMSprop(
-            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+            lr=0.00001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
             self.testX, self.testY), callbacks=[self.reduceLR, self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_InceptionResNetV2_NoDropout_4096_1024_1026_4096.h5')
+        self.model.save_weights('Model/TF_InceptionResNetV2_Dropout05_1536_1536_1536.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        WriteResultServices.create(history, 'TF_InceptionResNetV2_Dropout05_1536_1536_1536')
         self.utils.showReport(history)
     
     def trainMobileNetV2(self, ep=10, batch=15):

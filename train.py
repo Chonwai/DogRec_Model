@@ -21,10 +21,10 @@ def train():
     x, y = utils.loadDataset()
     trainingMachine = TrainingMachine(classN=amount)
     trainingMachine.init(x, y)
-    trainingMachine.trainTFMobileNetV2(epochs, batch)
+    # trainingMachine.trainTFMobileNetV2(epochs, batch)
     # trainingMachine.trainTFVGG19(epochs, batch)
     # trainingMachine.trainTFVGG16(epochs, batch)
-    # trainingMachine.trainTFInceptionResNetV2(epochs, batch)
+    trainingMachine.trainTFInceptionResNetV2(epochs, batch)
     # trainingMachine.trainTFXception(epochs, batch)
 
 def main():
