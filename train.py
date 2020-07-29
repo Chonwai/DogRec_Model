@@ -26,7 +26,9 @@ def train():
     # trainingMachine.trainTFVGG16(epochs, batch)
     # trainingMachine.trainTFInceptionResNetV2(epochs, batch)
     # trainingMachine.trainTFXception(epochs, batch)
-    trainingMachine.trainNASNetLarge(epochs, batch)
+    trainingMachine.trainTFNASNetLarge(epochs, batch)
+    # trainingMachine.trainNASNetLarge(epochs, batch)
+    # trainingMachine.trainMobileNetV2(epochs, batch)
 
 def main():
     train()

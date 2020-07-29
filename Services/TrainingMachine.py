@@ -40,7 +40,7 @@ class TrainingMachine:
                                           mode='auto',
                                           min_delta=.0001,
                                           cooldown=0,
-                                          min_lr=0.0000001)
+                                          min_lr=0.000001)
         self.earlyStop = EarlyStopping(monitor='val_loss',
                                        min_delta=.0002,
                                        patience=30,
@@ -183,7 +183,7 @@ class TrainingMachine:
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(1280, activation='relu'))
         self.model.add(Dropout(0.5))
-        self.model.add(Dense(960, activation='relu'))
+        self.model.add(Dense(640, activation='relu'))
         self.model.add(Dropout(0.5))
         self.model.add(Dense(1280, activation='relu'))
         self.model.add(Dropout(0.5))
@@ -192,17 +192,17 @@ class TrainingMachine:
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.Adam(
-            lr=0.001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
             self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_MobileNetV2_Dropout05_1280_960_1280.h5')
+        self.model.save_weights('Model/MobileNetV2_Dropout05_1280_640_1280.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
-        WriteResultServices.create(history, 'TF_MobileNetV2_Dropout05_1280_960_1280')
+        WriteResultServices.create(history, 'MobileNetV2_Dropout04_1280_640_1280')
         self.utils.showReport(history)
 
     def trainTFXception(self, ep=10, batch=10):
@@ -275,21 +275,59 @@ class TrainingMachine:
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
         WriteResultServices.create(history, 'TF_InceptionResNetV2_Dropout05_1536_1536_1536')
         self.utils.showReport(history)
+
+    def trainTFNASNetLarge(self, ep=10, batch=15):
+        pretrainingModel = NASNetLarge(
+            weights='imagenet', include_top=False, input_shape=(331, 331, 3))
+
+        self.model = Sequential()
+
+        self.model.add(pretrainingModel)
+
+        self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(4032, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(2016, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(4032, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(self.classN, activation='softmax'))
+
+        self.model.summary()
+
+        self.model.compile(optimizer=optimizers.RMSprop(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.earlyStop, self.reduceLR, self.lambdaCallback])
+
+        self.model.save_weights('Model/TF_NASNetLarge_Dropout05_4032_2016_4032.h5')
+
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        WriteResultServices.create(history, 'TF_NASNetLarge_Dropout05_4032_2016_4032')
+        self.utils.showReport(history)
     
     def trainMobileNetV2(self, ep=10, batch=15):
+        self.model = MobileNetV2(include_top=True, weights=None,
+                            input_shape=(224, 224, 3),  classes=self.classN)
 
-        model = MobileNetV2(include_top=True, weights=None,
-                            input_shape=(168, 168, 3),  classes=self.classN)
+        self.model.summary()
 
-        model.summary()
+        self.model.compile(optimizer=optimizers.RMSprop(
+            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
-        model.compile(optimizer=optimizers.RMSprop(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
 
-        model.fit(self.trainX, self.trainY, epochs=ep,
-                  batch_size=batch, validation_data=(self.testX, self.testY))
+        self.model.save_weights('Model/MobileNetV2_LR0001.h5')
 
-        model.save_weights('Model/MobileNetV2_01.h5')
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        WriteResultServices.create(history, 'MobileNetV2_LR0001')
+        self.utils.showReport(history)
 
     def trainXception(self, ep=10, batch=15, pooling='avg'):
         self.model = Xception(include_top=True, weights=None,
