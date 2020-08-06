@@ -214,11 +214,11 @@ class TrainingMachine:
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(2048, activation='relu'))
-        self.model.add(Dropout(0.5))
-        self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.5))
-        self.model.add(Dense(2048, activation='relu'))
-        self.model.add(Dropout(0.5))
+        self.model.add(Dropout(0.4))
+        self.model.add(Dense(1536, activation='relu'))
+        self.model.add(Dropout(0.4))
+        self.model.add(Dense(1536, activation='relu'))
+        self.model.add(Dropout(0.4))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         # self.model = multi_gpu_model(self.model, 2)
@@ -226,7 +226,7 @@ class TrainingMachine:
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.RMSprop(
-            lr=0.00001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+            lr=0.000001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
         # trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
 
@@ -235,12 +235,12 @@ class TrainingMachine:
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
             self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_Xception_Dropout05_2048_1024_2048.h5')
+        self.model.save_weights('Model/TF_Xception_Dropout04_2048_1536_1536_RMSprop_LR000001.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
-        WriteResultServices.create(history, 'TF_Xception_Dropout05_1024_2048_2048')
+        WriteResultServices.create(history, 'TF_Xception_Dropout04_2048_1536_1536_RMSprop_LR000001')
         self.utils.showReport(history)
 
     def trainTFInceptionResNetV2(self, ep=10, batch=15):
@@ -282,13 +282,15 @@ class TrainingMachine:
 
         self.model = Sequential()
 
+        pretrainingModel.trainable = False
+
         self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(4032, activation='relu'))
         self.model.add(Dropout(0.5))
-        self.model.add(Dense(2016, activation='relu'))
-        self.model.add(Dropout(0.5))
+        # self.model.add(Dense(2016, activation='relu'))
+        # self.model.add(Dropout(0.5))
         self.model.add(Dense(4032, activation='relu'))
         self.model.add(Dropout(0.5))
         self.model.add(Dense(self.classN, activation='softmax'))
@@ -296,17 +298,17 @@ class TrainingMachine:
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.RMSprop(
-            lr=0.0001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+            lr=0.000001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
-            self.testX, self.testY), callbacks=[self.earlyStop, self.reduceLR, self.lambdaCallback])
+            self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_NASNetLarge_Dropout05_4032_2016_4032.h5')
+        self.model.save_weights('Model/TF_NASNetLarge_Dropout05_4032_4032_RMSprop_LR000001.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
-        WriteResultServices.create(history, 'TF_NASNetLarge_Dropout05_4032_2016_4032')
+        WriteResultServices.create(history, 'TF_NASNetLarge_Dropout05_4032_4032_RMSprop_LR000001')
         self.utils.showReport(history)
     
     def trainMobileNetV2(self, ep=10, batch=15):
