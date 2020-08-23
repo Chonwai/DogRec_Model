@@ -1,4 +1,5 @@
 import keras
+import tensorflowjs as tfjs
 import numpy as np
 import matplotlib.pyplot as plt
 from Services.Utils import Utils
@@ -13,7 +14,7 @@ from keras.applications.inception_v3 import InceptionV3
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.applications.mobilenet_v2 import MobileNetV2
 from keras.applications.densenet import DenseNet201, DenseNet169, DenseNet121
-from keras.applications.nasnet import NASNetLarge
+from keras.applications.nasnet import NASNetMobile
 from keras.models import Sequential, Model
 from keras.layers import Activation, Dropout, Flatten, Dense, GlobalAveragePooling2D, GlobalAveragePooling1D
 from keras import optimizers
@@ -182,11 +183,11 @@ class TrainingMachine:
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(1280, activation='relu'))
-        self.model.add(Dropout(0.5))
-        self.model.add(Dense(640, activation='relu'))
-        self.model.add(Dropout(0.5))
+        self.model.add(Dropout(0.4))
+        self.model.add(Dense(960, activation='relu'))
+        self.model.add(Dropout(0.4))
         self.model.add(Dense(1280, activation='relu'))
-        self.model.add(Dropout(0.5))
+        self.model.add(Dropout(0.4))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         self.model.summary()
@@ -197,12 +198,12 @@ class TrainingMachine:
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
             self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
 
-        self.model.save_weights('Model/MobileNetV2_Dropout05_1280_640_1280.h5')
+        self.model.save_weights('Model/MobileNetV2_Dropout04_1280_960_1280_Adam_LR0001.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
-        WriteResultServices.create(history, 'MobileNetV2_Dropout04_1280_640_1280')
+        WriteResultServices.create(history, 'MobileNetV2_Dropout04_1280_960_1280_Adam_LR0001')
         self.utils.showReport(history)
 
     def trainTFXception(self, ep=10, batch=10):
@@ -215,33 +216,60 @@ class TrainingMachine:
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(2048, activation='relu'))
         self.model.add(Dropout(0.4))
-        self.model.add(Dense(1536, activation='relu'))
+        self.model.add(Dense(512, activation='relu'))
         self.model.add(Dropout(0.4))
-        self.model.add(Dense(1536, activation='relu'))
+        self.model.add(Dense(2048, activation='relu'))
         self.model.add(Dropout(0.4))
         self.model.add(Dense(self.classN, activation='softmax'))
-
-        # self.model = multi_gpu_model(self.model, 2)
 
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.RMSprop(
             lr=0.000001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
 
-        # trainBatch = self.dataGen.flow(self.trainX, self.trainY, batch_size=batch)
-
-        # history = self.model.fit_generator(trainBatch, callbacks=[self.reduceLR, self.earlyStop, self.lambdaCallback], epochs=ep, steps_per_epoch=((len(self.trainX) * 1) / batch), validation_data=(self.testX, self.testY))
-
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
             self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
 
-        self.model.save_weights('Model/TF_Xception_Dropout04_2048_1536_1536_RMSprop_LR000001.h5')
+        self.model.save_weights('Model/TF_Xception_Dropout04_2048_512_2048_RMSprop_LR000001.h5')
 
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
-        WriteResultServices.create(history, 'TF_Xception_Dropout04_2048_1536_1536_RMSprop_LR000001')
+        WriteResultServices.create(history, 'TF_Xception_Dropout04_2048_512_2048_RMSprop_LR000001')
         self.utils.showReport(history)
+    
+    def trainTFNASNetMobile(self, ep=10, batch=10):
+        pretrainingModel = NASNetMobile(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
+
+        self.model = Sequential()
+
+        self.model.add(pretrainingModel)
+
+        self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(1056, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(792, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(1056, activation='relu'))
+        self.model.add(Dropout(0.5))
+        self.model.add(Dense(self.classN, activation='softmax'))
+
+        self.model.summary()
+
+        self.model.compile(optimizer=optimizers.RMSprop(
+            lr=0.000001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
+
+        self.model.save('Model/TF_NASNetMobile_Dropout05_1056_792_1056_RMSprop_LR000001.h5')
+
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        WriteResultServices.create(history, 'TF_NASNetMobile_Dropout05_1056_792_1056_RMSprop_LR000001')
+        self.utils.showReport(history)
+
 
     def trainTFInceptionResNetV2(self, ep=10, batch=15):
         pretrainingModel = InceptionResNetV2(

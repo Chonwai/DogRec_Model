@@ -37,8 +37,8 @@ class Utils():
             for j, a in zip(imgList, annotationList):
                 imgPath = self.datasetPath + '/' + i + '/' + j
                 annotationPath = self.annotationPath + '/' + i + '/' + a
-                # images.append(self.loadImg(imgPath, annotationPath, 224, 224))
-                images.append(self.loadImg(imgPath, annotationPath, 299, 299))
+                images.append(self.loadImg(imgPath, annotationPath, 224, 224))
+                # images.append(self.loadImg(imgPath, annotationPath, 299, 299))
                 # images.append(self.loadImg(imgPath, annotationPath, 331, 331))
                 labels.append(
                     [1 if k == count else 0 for k in range(self.N)])
@@ -110,9 +110,9 @@ class Utils():
         plt.show()
 
         # Show the learning rate report.
-        plt.figure('Learning Rate')
-        plt.plot(history.history['lr'])
-        plt.title('Model Learning Rate')
-        plt.ylabel('learning rate')
-        plt.xlabel('epoch')
-        plt.show()
+        # plt.figure('Learning Rate')
+        # plt.plot(history.history['lr'])
+        # plt.title('Model Learning Rate')
+        # plt.ylabel('learning rate')
+        # plt.xlabel('epoch')
+        # plt.show()
