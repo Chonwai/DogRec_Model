@@ -1,6 +1,2 @@
 Model/Training
 Model
-
-*.pyc
-
-Services/__pycache__
