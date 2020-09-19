@@ -247,29 +247,60 @@ class TrainingMachine:
 
         self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
         self.model.add(Dense(1056, activation='relu'))
-        self.model.add(Dropout(0.5))
+        self.model.add(Dropout(0.4))
         self.model.add(Dense(792, activation='relu'))
-        self.model.add(Dropout(0.5))
+        self.model.add(Dropout(0.4))
+        self.model.add(Dense(792, activation='relu'))
+        self.model.add(Dropout(0.4))
         self.model.add(Dense(1056, activation='relu'))
-        self.model.add(Dropout(0.5))
+        self.model.add(Dropout(0.4))
         self.model.add(Dense(self.classN, activation='softmax'))
 
         self.model.summary()
 
         self.model.compile(optimizer=optimizers.RMSprop(
-            lr=0.000001), loss='categorical_crossentropy', metrics=['mse', 'accuracy', self.top3Accuracy, self.top5Accuracy])
+            lr=0.00001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
 
         history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
             self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
 
-        self.model.save('Model/TF_NASNetMobile_Dropout05_1056_792_1056_RMSprop_LR000001.h5')
-
+        self.model.save('Model/TF_NASNetMobile_Dropout04_1056_792_792_1056_RMSprop_LR00001.h5')
         self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
         self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
-        WriteResultServices.create(history, 'TF_NASNetMobile_Dropout05_1056_792_1056_RMSprop_LR000001')
+        WriteResultServices.create(history, 'TF_NASNetMobile_Dropout04_1056_792_792_1056_RMSprop_LR00001')
         self.utils.showReport(history)
 
+    def trainTFDenseNet121(self, ep=10, batch=10):
+        pretrainingModel = DenseNet121(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
+
+        self.model = Sequential()
+
+        self.model.add(pretrainingModel)
+
+        self.model.add(GlobalAveragePooling2D(input_shape=self.trainX.shape[1:]))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.6))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.6))
+        self.model.add(Dense(1024, activation='relu'))
+        self.model.add(Dropout(0.6))
+        self.model.add(Dense(self.classN, activation='softmax'))
+
+        self.model.summary()
+
+        self.model.compile(optimizer=optimizers.RMSprop(
+            lr=0.00001), loss='categorical_crossentropy', metrics=['mse', 'accuracy'])
+
+        history = self.model.fit(self.trainX, self.trainY, epochs=ep, batch_size=batch, validation_data=(
+            self.testX, self.testY), callbacks=[self.earlyStop, self.lambdaCallback])
+
+        self.model.save('Model/TF_DenseNet121_Dropout06_1024_1024_1024_RMSprop_LR00001.h5')
+        self.topKAccuracy(self.model, k=1, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=3, testX=self.testX, testY=self.testY)
+        self.topKAccuracy(self.model, k=5, testX=self.testX, testY=self.testY)
+        WriteResultServices.create(history, 'TF_DenseNet121_Dropout06_1024_1024_1024_RMSprop_LR00001')
+        self.utils.showReport(history)
 
     def trainTFInceptionResNetV2(self, ep=10, batch=15):
         pretrainingModel = InceptionResNetV2(
@@ -420,7 +451,7 @@ class TrainingMachine:
         self.utils.showReport(history)
 
     def eval(self, img, k=5):
-        pretrainingModel = MobileNetV2(
+        pretrainingModel = NASNetMobile(
             weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
         self.model = Sequential()
@@ -428,13 +459,15 @@ class TrainingMachine:
         self.model.add(pretrainingModel)
 
         self.model.add(GlobalAveragePooling2D())
-        self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.5))
-        self.model.add(Dense(1024, activation='relu'))
-        self.model.add(Dropout(0.5))
+        self.model.add(Dense(1056, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(792, activation='relu'))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(1056, activation='relu'))
+        self.model.add(Dropout(0.3))
         self.model.add(Dense(self.classN, activation='softmax'))
 
-        self.model.load_weights('Model/TF_MobileNetV2_100a.h5')
+        self.model.load_weights('Model/TF_NASNetMobile_Dropout03_1056_792_1056_RMSprop_LR000001.h5')
 
         predict = self.model.predict(img)
         probability = self.model.predict_proba(img)[0]
